@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-add.dir/test_add.cpp.o" -o test-add
