@@ -113,11 +113,19 @@ TEST_CASE("5. Test BoxInterface", "[BoxInterface]")
 
    // FIXME: which single line would you modify in PlainBox.hpp to make the following codes compile?
 
-   // generalBox[0] = new PlainBox<char>('P');
-   // generalBox[1] = new ToyBox<char>('T', WHITE);
-   // generalBox[2] = new MagicBox<char>('M');
+   generalBox[0] = new PlainBox<char>('P');
+   generalBox[1] = new ToyBox<char>('T', WHITE);
+   generalBox[2] = new MagicBox<char>('M');
 
-   // REQUIRE(generalBox[0]->getItem()=='P');
-   // REQUIRE(generalBox[1]->getItem()=='T');
-   // REQUIRE(generalBox[2]->getItem()=='M');
+   REQUIRE(generalBox[0]->getItem()=='P');
+   REQUIRE(generalBox[1]->getItem()=='T');
+   REQUIRE(generalBox[2]->getItem()=='M');
+}
+
+TEST_CASE("6. My Test Case","[PlainBox2]")
+{
+   PlainBox2<std::string> *toybox1;
+   toybox1 -> setItem("Basketball");
+   REQUIRE(toybox1 -> getItem() == "Basketball");
+
 }
