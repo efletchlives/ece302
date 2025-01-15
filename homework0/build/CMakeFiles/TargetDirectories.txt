@@ -1,0 +1,5 @@
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework0/build/CMakeFiles/test_boxes.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework0/build/CMakeFiles/direct_download.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework0/build/CMakeFiles/test.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework0/build/CMakeFiles/edit_cache.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework0/build/CMakeFiles/rebuild_cache.dir
