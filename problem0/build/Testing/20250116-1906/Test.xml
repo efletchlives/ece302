@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20250116-1906-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.31.4"
+	CompilerName=""
+	CompilerVersion=""
+	OSName="Linux"
+	Hostname="fletchlives"
+	OSRelease="5.15.167.4-microsoft-standard-WSL2"
+	OSVersion="#1 SMP Tue Nov 5 00:21:55 UTC 2024"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="186"
+	ModelName="13th Gen Intel(R) Core(TM) i9-13900H"
+	ProcessorCacheSize="24576"
+	NumberOfLogicalCPU="20"
+	NumberOfPhysicalCPU="10"
+	TotalVirtualMemory="4096"
+	TotalPhysicalMemory="15830"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="2995.2"
+	>
+	<Testing>
+		<StartDateTime>Jan 16 14:06 EST</StartDateTime>
+		<StartTestTime>1737054406</StartTestTime>
+		<TestList/>
+		<EndDateTime>Jan 16 14:06 EST</EndDateTime>
+		<EndTestTime>1737054407</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
