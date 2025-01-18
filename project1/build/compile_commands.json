@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project1/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project1/test_bitarray.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project1/test_bitarray.cpp",
+  "output": "CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project1/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-bitarray.dir/bitarray.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project1/bitarray.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project1/bitarray.cpp",
+  "output": "CMakeFiles/test-bitarray.dir/bitarray.cpp.o"
+}
+]

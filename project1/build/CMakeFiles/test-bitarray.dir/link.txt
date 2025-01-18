@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o" "CMakeFiles/test-bitarray.dir/bitarray.cpp.o" -o test-bitarray
