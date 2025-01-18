@@ -34,7 +34,9 @@ public:
   std::string asString() const;
 
 private:
-  // TODO
+  uint8_t* bitdata; // holds the bit data in an array
+  intmax_t bitsize; // # of bits in the bit array
+  bool bitsetstate; // if the bit array is in a valid state
 };
 
 #endif

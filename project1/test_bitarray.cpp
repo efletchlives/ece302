@@ -89,3 +89,165 @@ TEST_CASE("Bitarray: Test many given methods combined", "[bitarray]")
             ));
     }
 }
+
+/* my test cases */
+
+TEST_CASE("test size method","[bitarray]") {
+    // size method using default constructor
+    BitArray arr1;
+    REQUIRE(arr1.size() == 8);
+
+    // size method using constructor with size N input
+    BitArray arr2(16);
+    REQUIRE(arr2.size() == 16);
+
+    // size method using constructor with string input
+    std::string str("0000111000111");
+    BitArray arr3(str);
+    REQUIRE(arr3.size() == 13);
+}
+
+TEST_CASE("test good method","[bitarray]") {
+    // good method using default constructor
+    BitArray arr1;
+    REQUIRE(arr1.good() == true);
+
+    // good method using constructor with size N input (valid bitset)
+    BitArray arr2(5);
+    REQUIRE(arr2.good() == true);
+
+    // good method using constructor with size N input (invalid bitset)
+    BitArray arr3(-1);
+    REQUIRE(arr3.good() == false);
+
+    // good method using constructor with string input (valid bitset)
+    std::string str1("100010101001");
+    BitArray arr4(str1);
+    REQUIRE(arr4.good() == true);
+
+    // good method using constructor with string input (invalid bitset)
+    std::string str2("12129093232");
+    BitArray arr5(str2);
+    REQUIRE(arr5.good() == false);
+}
+
+TEST_CASE("test set method","[bitarray]") {
+    // set method using default constructor (valid + invalid index)
+    BitArray arr1;
+    arr1.set(7);
+    REQUIRE(arr1.test(7)); // valid index, has to be '1'
+
+    arr1.set(9);
+    REQUIRE_FALSE(arr1.test(9)); // invalid index
+
+    // set method using constructor with size N input (valid + invalid index)
+    BitArray arr2(6);
+    arr2.set(5);
+    REQUIRE(arr2.test(5)); // valid index, has to be '1'
+
+    arr2.set(7);
+    REQUIRE_FALSE(arr2.test(7)); // invalid index
+
+    // set method using constructor with string input (valid + invalid index)
+    std::string str("01101010011");
+    BitArray arr3(str);
+    arr3.set(10);
+    REQUIRE(arr3.test(10)); // valid index, has to be '1'
+
+    arr3.set(12);
+    REQUIRE_FALSE(arr3.test(12)); // invalid index
+}
+
+TEST_CASE("test reset method","[bitarray]") {
+    // reset method using default constructor (valid + invalid index)
+    BitArray arr1;
+    arr1.set(7);
+    REQUIRE(arr1.test(7)); // means the 7th bit (starting from 0) has to be '1'
+    arr1.reset(7);
+    REQUIRE_FALSE(arr1.test(7)); // means the 7th bit (starting from 0) is not '1' and since it has a valid index, it must be '0'
+
+    arr1.reset(10);
+    REQUIRE_FALSE(arr1.test(10)); // invalid index
+
+    // reset method using constructor with size N input (valid + invalid index)
+    BitArray arr2(15);
+    arr2.set(10);
+    REQUIRE(arr2.test(10)); // means the 10th bit (starting from 0) has to be '1'
+    arr2.reset(10);
+    REQUIRE_FALSE(arr2.test(10)); // means the 10th bit (starting from 0) is not '1' and since it has a valid index, it must be '0'
+
+    arr2.reset(16);
+    REQUIRE_FALSE(arr2.test(16)); // invalid index
+
+    // reset method using constructor with string input (valid + invalid index)
+    std::string str("010101010101110");
+    BitArray arr3(str);
+    arr3.reset(1);
+    REQUIRE_FALSE(arr3.test(1)); // since bit 1 (starting from 0) started out at '1' and the reset method was applied to it, bit 1's value must be '0'
+
+    arr3.reset(17);
+    REQUIRE_FALSE(arr3.test(17)); // invalid index
+}
+
+TEST_CASE("test toggle method","[bitarray]") {
+    // toggle method using default constructor (valid + invalid index)
+    BitArray arr1;
+    arr1.toggle(7);
+    REQUIRE(arr1.test(7)); // means 7th bit (starting from 0) was toggled from '0' to '1'
+
+    arr1.toggle(9);
+    REQUIRE_FALSE(arr1.test(9)); // invalid index
+
+    // toggle method using constructor with size N input (valid + invalid index)
+    BitArray arr2(10);
+    arr2.toggle(9);
+    REQUIRE(arr2.test(9)); // means 9th bit (starting from 0) was toggled from '0' to '1'
+
+    arr2.toggle(12);
+    REQUIRE_FALSE(arr2.test(12)); // invalid index
+
+    // toggle method using constructor with string input (valid + invalid index)
+    std::string str("01010101010101010101");
+    BitArray arr3(str);
+    arr3.toggle(19);
+    REQUIRE_FALSE(arr3.test(19)); // means 19th bit was toggled from '1' to '0'
+
+    arr3.toggle(25);
+    REQUIRE_FALSE(arr3.test(25)); // invalid index
+}
+
+TEST_CASE("test test method", "[bitarray]") {
+    // test method using default constructor (valid + invalid index)
+    BitArray arr1;
+    REQUIRE_FALSE(arr1.test(4)); // means the 4th bit (starting from 0) is '0'
+
+    REQUIRE_FALSE(arr1.test(10)); // invalid index
+
+    // test method using constructor with size N input (valid + invalid index)
+    BitArray arr2(15);
+    REQUIRE_FALSE(arr2.test(10)); // means that the 10th bit (starting from 0) is '0'
+    
+    REQUIRE_FALSE(arr2.test(17)); // invalid index
+
+    // test method using constructor with string input (valid + invalid index)
+    std::string str("0101110101");
+    BitArray arr3(str);
+    REQUIRE(arr3.test(1)); // means that the 1st bit (starting from 0) is '1'
+
+    REQUIRE_FALSE(arr3.test(12)); // invalid index
+}
+
+TEST_CASE("test asString method","[bitarray]") {
+    // asString method using default constructor
+    BitArray arr1;
+    REQUIRE(arr1.asString() == "00000000");
+
+    // asString method using constructor with size N input
+    BitArray arr2(15);
+    REQUIRE(arr2.asString() == "000000000000000");
+
+    // asString method using constructor with string input
+    std::string str("101110101101");
+    BitArray arr3(str);
+    REQUIRE(arr3.asString() == "101110101101");
+}
