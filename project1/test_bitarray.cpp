@@ -251,3 +251,51 @@ TEST_CASE("test asString method","[bitarray]") {
     BitArray arr3(str);
     REQUIRE(arr3.asString() == "101110101101");
 }
+
+
+TEST_CASE ("test toggle checkoff","[bitarray]"){
+    std::string str = "0111101";
+    BitArray arr1(str);
+    for(int i=0; i<arr1.size();i++){
+        if(arr1.test(i)==true){
+            arr1.toggle(i);
+        }
+    }
+    REQUIRE(arr1.asString() == "0000000");
+}
+
+TEST_CASE ("test toggle checkoff 2","[bitarray]"){
+    std::string str1 = "0111";
+    std::string str2 = "111";
+    BitArray arr1(str1);
+    BitArray arr2(str2);
+
+    REQUIRE(arr1.asString() == "0111");
+    REQUIRE(arr2.asString() == "111");
+}
+
+TEST_CASE("test count ones","[bitarray]"){
+    std::string str = "0101110101";
+    BitArray arr1(str);
+    REQUIRE(arr1.countOnes()==6); 
+}
+
+// TEST_CASE("BitarrayNew: Test common methods", "[bitarray]")
+// {
+//     // a bit sequence of size 12: 0010_11101100
+//     std::string s("001011101100");
+//     BitArray b(s);
+//     REQUIRE(b.size() == 2);
+//     REQUIRE(b.good());
+
+//     // maybe you need to declare new method asVector()
+//     REQUIRE(b.asVector().size() == 2);  // the given string should be stored as {236, 2}
+//     REQUIRE(b.asVector()[0] == 236);    // 11101100 is decimal 236
+//     REQUIRE(b.asVector()[1] == 2);      // 0010 is decimal 2
+
+//     b.set(1);
+//     REQUIRE(b.asVector()[1] == 6);   // 0010 changes to 0110 (decimal 6)
+
+//     b.reset(4);
+//     REQUIRE(b.asVector()[0] == 108); // 11101100 changes to 01101100 (decimal 108)
+// }

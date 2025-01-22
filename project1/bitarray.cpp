@@ -107,3 +107,13 @@ std::string BitArray::asString() const {
     }
     return stringarray; // represent the bit array digits from left-to-right with the most significant bit first
 }
+
+intmax_t BitArray::countOnes() {
+    intmax_t total=0;
+    for(int i=0;i<bitsize;i++){
+        if(test(i)){
+            total++;
+        }
+    }
+    return total;
+}
