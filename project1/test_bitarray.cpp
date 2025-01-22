@@ -274,11 +274,11 @@ TEST_CASE ("test toggle checkoff 2","[bitarray]"){
     REQUIRE(arr2.asString() == "111");
 }
 
-TEST_CASE("test count ones","[bitarray]"){
-    std::string str = "0101110101";
-    BitArray arr1(str);
-    REQUIRE(arr1.countOnes()==6); 
-}
+// TEST_CASE("test count ones","[bitarray]"){
+//     std::string str = "0101110101";
+//     BitArray arr1(str);
+//     REQUIRE(arr1.countOnes()==6); 
+// }
 
 // TEST_CASE("BitarrayNew: Test common methods", "[bitarray]")
 // {

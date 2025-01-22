@@ -33,7 +33,7 @@ public:
 
   std::string asString() const;
 
-  intmax_t countOnes();
+  //intmax_t countOnes();
 private:
   uint8_t* bitdata; // holds the bit data in an array
   intmax_t bitsize; // # of bits in the bit array
