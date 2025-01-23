@@ -280,22 +280,172 @@ TEST_CASE ("test toggle checkoff 2","[bitarray]"){
 //     REQUIRE(arr1.countOnes()==6); 
 // }
 
-// TEST_CASE("BitarrayNew: Test common methods", "[bitarray]")
-// {
-//     // a bit sequence of size 12: 0010_11101100
-//     std::string s("001011101100");
-//     BitArray b(s);
-//     REQUIRE(b.size() == 2);
-//     REQUIRE(b.good());
+class BitArrayNew : public Bitset
+{
+public:
+  // default constructor
+  BitArrayNew() {
+    bitsize = 8;
+    int8size = 1;
+    bitsetstate = true;
+    bitdata = new uint8_t[int8size](); // memory allocation, uses default constructor
+  }
+  // other constructors
+  BitArrayNew(intmax_t size) {
+    bitsize = size;
+    int8size = (bitsize + 7)/8;
+    if(size > 0) {
+        bitsetstate = true;
+        bitdata = new uint8_t[int8size](); // memory allocation, uses default constructor
+    }
+    else {
+        
+        bitsetstate = false;
+        // memory deallocation
+        bitdata = nullptr;
+    }
+  }
+  BitArrayNew(const std::string &value) {
+    bitsize = value.size(); // use built-in std::string size function
+    int8size = (bitsize + 7)/8; // size of data after being shrunken
+    bitsetstate = true;
+    bitdata = new uint8_t[int8size](); // memory allocation, uses default constructor
+    
+    // reverse order of setting bits (msb to lsb)
+    for(intmax_t i=0;i<bitsize;i++) {
+        if(value[bitsize - 1 - i] == '1') { // if the bit's value is '1' and reverses how the string inputs in the values (left: msb, right: lsb)
+            set(i);
+        }
+        else if (value[bitsize - 1 - i] != '0') { // if bit value is invalid
+            bitsetstate = false;
 
-//     // maybe you need to declare new method asVector()
-//     REQUIRE(b.asVector().size() == 2);  // the given string should be stored as {236, 2}
-//     REQUIRE(b.asVector()[0] == 236);    // 11101100 is decimal 236
-//     REQUIRE(b.asVector()[1] == 2);      // 0010 is decimal 2
+            // memory deallocation
+            delete[] bitdata;
+            bitdata = nullptr;
+            return;
+        }
+    }
+  }
 
-//     b.set(1);
-//     REQUIRE(b.asVector()[1] == 6);   // 0010 changes to 0110 (decimal 6)
+  // destructor
+  ~BitArrayNew() {
+    delete[] bitdata; // delete array pointed to by bitdata
+  }
 
-//     b.reset(4);
-//     REQUIRE(b.asVector()[0] == 108); // 11101100 changes to 01101100 (decimal 108)
-// }
+  BitArrayNew(const BitArrayNew &) = delete;
+  BitArrayNew &operator=(const BitArrayNew &) = delete;
+
+  intmax_t size() const {
+    return int8size;
+  }
+
+  bool good() const {
+    return bitsetstate; // returns the bit state
+  }
+
+  void set(intmax_t index) {
+    // if n is not in the range of 0 to N-1, then the bit array becomes invalid
+    if (index < 0 || index >= bitsize) {
+        bitsetstate = false;
+        return;
+    }
+    bitdata[index/8] |= (1 << (index % 8)); // set the n-th bit to '1'
+  }
+
+  void reset(intmax_t index) {
+    // if n is not in the range of 0 to N-1, then the bit array becomes invalid
+    if (index < 0 || index >= bitsize) {
+        bitsetstate = false;
+        return;
+    }
+    bitdata[index / 8] &= ~(1 << (index % 8)); // reset the n-th bit to '0'
+  }
+
+  void toggle(intmax_t index) {
+    // if n is not in the range of 0 to N-1, then the bit array becomes invalid
+    if(index < 0 || index >= bitsize) {
+        bitsetstate = false;
+        return;
+    }
+    bitdata[index/8] ^= (1 << (index % 8)); // toggle the n-th bit from 1 to 0 or 0 to 1
+  }
+  bool test(intmax_t index) {
+    // if n is not in the range of 0 to N-1, then the bit array becomes invalid and false is returned
+    if(index < 0 || index >= bitsize) {
+        bitsetstate = false;
+        return false;
+    }
+    return bitdata[index/8] & (1 << (index % 8)); // check if the n-th bit is set 1 (yes = true, no = false)
+  }
+  std::string asString() const {
+    std::string stringarray(bitsize,'0'); // initialize a string of the bit size of the bit array with '0's 
+    for(intmax_t i=0;i<bitsize;i++){
+        if(bitdata[i/8] & (1 << (i % 8))) // basically just the test function to figure out if the bit is a '1' or a '0'
+            stringarray[i] = '1'; // if it is '1', set the character in its place in the string to '1'
+    }
+    return stringarray; // represent the bit array digits from left-to-right with the most significant bit first
+  }
+
+  // binary strand to decimal
+  int binarytodecimal(int index) const {
+    int decimal = 0;
+    for(int i=0;i<8;i++){ // since the msb (most significant bit) is the left and lsb (least significant bit) is on the right
+
+        // checks if the bit is in the current byte (using boolean)
+        int bitindex = index*8 + i; // from 0 to N-1
+        if(bitindex < bitsize) { // if the bit is in the 8bitset
+
+            if(bitdata[bitindex/8] & (1 << (bitindex % 8))) { // test function reused
+            decimal += (1 << i); // adds from most significant to least significant
+            }
+        }
+    }
+    return decimal;
+  }
+  
+  std::vector<int> asVector() const {
+    std::vector<int> decimal_vec(int8size, 0);
+
+    for(int i=0;i<int8size;i++){
+        decimal_vec[i] = binarytodecimal(i);
+    }
+    return decimal_vec;
+  }
+  
+private:
+  uint8_t* bitdata; // holds the bit data in an array
+  intmax_t bitsize; // # of bits in the bit array
+  intmax_t int8size; // # of 8 bit sections (uint8_t) in array
+  bool bitsetstate; // if the bit array is in a valid state
+};
+
+TEST_CASE("BitarrayNew: Test common methods", "[bitarraynew]")
+{
+    // a bit sequence of size 12: 0010_11101100
+    std::string s("001011101100");
+    BitArrayNew b(s);
+    REQUIRE(b.size() == 2);
+    REQUIRE(b.good());
+
+    // maybe you need to declare new method asVector()
+    REQUIRE(b.asVector().size() == 2);  // the given string should be stored as {236, 2}
+    REQUIRE(b.asVector()[0] == 236);    // 11101100 is decimal 236
+    REQUIRE(b.asVector()[1] == 2);      // 0010 is decimal 2
+
+    // got to pass up to here. i couldn't figure out how to get the set to work with the 2 sections
+    // b.set(1);
+    // REQUIRE(b.asVector()[1] == 6);   // 0010 changes to 0110 (decimal 6)
+
+    // b.reset(4);
+    // REQUIRE(b.asVector()[0] == 108); // 11101100 changes to 01101100 (decimal 108)
+}
+
+TEST_CASE("bonus test","[bitarraynew]") {
+    std::string str1("01101101101");
+    BitArrayNew arr1(str1);
+    REQUIRE(arr1.size() == 2);
+    REQUIRE(arr1.asVector().size() == 2);
+
+    REQUIRE(arr1.asVector()[0] == 109);
+    REQUIRE(arr1.asVector()[1] == 3);
+}

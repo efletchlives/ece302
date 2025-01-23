@@ -35,13 +35,17 @@ CMakeFiles/test-bitarray.dir/bitarray.cpp.o: /home/efletchlives/VsCode/ECE302/EC
   /usr/include/c++/11/bits/range_access.h \
   /usr/include/c++/11/bits/std_abs.h \
   /usr/include/c++/11/bits/stl_algobase.h \
+  /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/stl_construct.h \
   /usr/include/c++/11/bits/stl_function.h \
   /usr/include/c++/11/bits/stl_iterator.h \
   /usr/include/c++/11/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/11/bits/stl_iterator_base_types.h \
   /usr/include/c++/11/bits/stl_pair.h \
+  /usr/include/c++/11/bits/stl_uninitialized.h \
+  /usr/include/c++/11/bits/stl_vector.h \
   /usr/include/c++/11/bits/stringfwd.h \
+  /usr/include/c++/11/bits/vector.tcc \
   /usr/include/c++/11/cctype \
   /usr/include/c++/11/cerrno \
   /usr/include/c++/11/clocale \
@@ -66,6 +70,7 @@ CMakeFiles/test-bitarray.dir/bitarray.cpp.o: /home/efletchlives/VsCode/ECE302/EC
   /usr/include/c++/11/string \
   /usr/include/c++/11/type_traits \
   /usr/include/c++/11/typeinfo \
+  /usr/include/c++/11/vector \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -528,23 +533,11 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/c++/11/cmath:
 
-/usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
-
-/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
-
-/usr/include/c++/11/bits/vector.tcc:
-
 /usr/include/c++/11/bits/uniform_int_dist.h:
 
 /usr/include/c++/11/bits/streambuf_iterator.h:
 
 /usr/include/c++/11/bits/streambuf.tcc:
-
-/usr/include/c++/11/bits/stl_vector.h:
-
-/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
-
-/usr/include/c++/11/bits/stl_uninitialized.h:
 
 /usr/include/c++/11/bits/stl_set.h:
 
@@ -561,10 +554,6 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 /usr/include/c++/11/bits/sstream.tcc:
 
 /usr/include/c++/11/bits/shared_ptr_base.h:
-
-/usr/include/c++/11/bits/stl_bvector.h:
-
-/usr/include/c++/11/bits/refwrap.h:
 
 /usr/include/c++/11/bits/locale_facets.tcc:
 
@@ -590,11 +579,15 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/c++/11/bits/algorithmfwd.h:
 
-/usr/include/stdlib.h:
+/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
-/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
+/usr/include/c++/11/backward/auto_ptr.h:
 
-/usr/include/stdio.h:
+/usr/include/c++/11/array:
+
+/usr/include/c++/11/algorithm:
+
+/usr/include/assert.h:
 
 /usr/include/c++/11/ext/concurrence.h:
 
@@ -630,6 +623,12 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/c++/11/bits/memoryfwd.h:
 
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/c++/11/ext/new_allocator.h:
+
+/usr/include/c++/11/cstdint:
+
 /usr/include/c++/11/bits/stl_algo.h:
 
 /usr/include/c++/11/ext/atomicity.h:
@@ -642,11 +641,21 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
+/usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
+
+/usr/include/c++/11/bits/vector.tcc:
+
+/usr/include/c++/11/bits/localefwd.h:
+
 /usr/include/c++/11/bits/stringfwd.h:
 
 /usr/include/asm-generic/errno.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/usr/include/c++/11/bits/stl_vector.h:
 
 /usr/include/c++/11/ext/alloc_traits.h:
 
@@ -688,8 +697,6 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
-/usr/include/c++/11/array:
-
 /usr/include/c++/11/bits/charconv.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
@@ -697,6 +704,10 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 /usr/include/c++/11/bits/erase_if.h:
 
 /usr/include/c++/11/debug/assertions.h:
+
+/usr/include/c++/11/bits/refwrap.h:
+
+/usr/include/c++/11/bits/stl_bvector.h:
 
 /usr/include/c++/11/bits/stl_pair.h:
 
@@ -708,15 +719,7 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
-/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
-
-/usr/include/c++/11/ext/new_allocator.h:
-
-/usr/include/c++/11/cstdint:
-
 /usr/include/c++/11/bits/allocator.h:
-
-/usr/include/sched.h:
 
 /usr/include/c++/11/cstddef:
 
@@ -744,6 +747,10 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/c++/11/typeinfo:
 
+/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
+
+/usr/include/c++/11/bits/stl_uninitialized.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/include/c++/11/cctype:
@@ -756,6 +763,12 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/c++/11/bits/exception.h:
 
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/include/c++/11/ext/string_conversions.h:
+
 /usr/include/c++/11/cstring:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
@@ -766,19 +779,11 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
-/usr/include/c++/11/bits/stl_tempbuf.h:
-
-/usr/include/c++/11/bits/stl_function.h:
-
-/usr/include/stdint.h:
-
 /usr/include/c++/11/type_traits:
 
-/usr/include/c++/11/algorithm:
+/usr/include/c++/11/bits/stl_multiset.h:
 
 /usr/include/c++/11/vector:
-
-/usr/include/c++/11/bits/stl_multiset.h:
 
 /usr/include/c++/11/bits/concept_check.h:
 
@@ -806,16 +811,6 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 
 /usr/include/c++/11/stdexcept:
 
-/usr/include/c++/11/bits/move.h:
-
-/usr/include/c++/11/bits/localefwd.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/c++/11/ext/string_conversions.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
 /usr/include/c++/11/new:
@@ -829,6 +824,8 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 /usr/include/c++/11/bit:
 
 /usr/include/c++/11/clocale:
+
+/usr/include/c++/11/bits/move.h:
 
 /usr/include/c++/11/bits/ostream.tcc:
 
@@ -851,6 +848,20 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 /usr/include/c++/11/bits/stl_construct.h:
 
 /usr/include/c++/11/bits/stl_algobase.h:
+
+/usr/include/sched.h:
+
+/usr/include/c++/11/bits/stl_tempbuf.h:
+
+/usr/include/c++/11/bits/stl_function.h:
+
+/usr/include/stdint.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
+
+/usr/include/stdio.h:
+
+/usr/include/stdlib.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
@@ -1019,9 +1030,3 @@ CMakeFiles/test-bitarray.dir/test_bitarray.cpp.o: /home/efletchlives/VsCode/ECE3
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h:
-
-/usr/include/assert.h:
-
-/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
-
-/usr/include/c++/11/backward/auto_ptr.h:
