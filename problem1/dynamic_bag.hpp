@@ -3,6 +3,8 @@
 
 #include "abstract_bag.hpp"
 
+// dynamic memory not static 
+
 template <typename T>
 class DynamicBag : public AbstractBag<T>
 {

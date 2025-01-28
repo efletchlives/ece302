@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework1/Lec2/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_boxes.dir/test_boxes.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework1/Lec2/test_boxes.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework1/Lec2/test_boxes.cpp",
+  "output": "CMakeFiles/test_boxes.dir/test_boxes.cpp.o"
+}
+]

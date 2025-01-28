@@ -5,9 +5,9 @@ template <typename T>
 DynamicBag<T>::DynamicBag()
 {
   // initialize data, size, and max_size to x's
-  data = new T[10];
+  data = new T[100];
   size = 0;
-  max_size = 10;
+  max_size = 100;
 }
 
 // copy constructor
@@ -53,23 +53,22 @@ template <typename T>
 // adds an item to the end of the bag
 bool DynamicBag<T>::add(const T &item)
 {
-  // if the current size is equal to the maximum size (meaning there is no more room in the data array)
+  // if the current size is equal to the maximum size (meaning there is no more room in the data array?)
   if(size == max_size){
-    return false; // hi gavin, do you want us to expand the bag if there is no room or not?
+    //return false; // hi gavin, do you want us to expand the bag if there is no room or not?
 
-    // if so, below is the code: 
+    // if so, below is the code:
+    max_size = 2*max_size; // double maximum size
+    T* new_data = new T[max_size]; // expand the array data to the new maximum size
 
-    // max_size = 2*max_size; // double maximum size
-    // T* new_data = new T[max_size]; // expand the array data to the new maximum size
+    // copy element by element from old array into new array
+    for(int i=0;i<size;i++){
+      new_data[i] = data[i];
+    }
 
-    // // copy element by element from old array into new array
-    // for(int i=0;i<size;i++){
-    //   new_data[i] = data[i];
-    // }
-
-    // // properly deallocate the old array to avoid dangling pointers and memory leaks
-    // delete[] data;
-    // data = new_data;
+    // properly deallocate the old array to avoid dangling pointers and memory leaks
+    delete[] data;
+    data = new_data;
   }
 
   // add the new data to the end
@@ -116,11 +115,11 @@ bool DynamicBag<T>::contains(const T &item) const
 {
   // for loop to loop through all of the data in the bag
   for(int i=0;i<size;i++){
-    if(data[i] == item){
-      return true;
+    if(data[i] == item){ // if item in bag is equal to item we are checking for
+      return true; // item found
     }
   }
-  return false;
+  return false; // item not found
 }
 
 template <typename T>

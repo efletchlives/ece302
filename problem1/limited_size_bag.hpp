@@ -3,6 +3,8 @@
 
 #include "abstract_bag.hpp"
 
+// static memory not dynamic 
+
 template <typename T>
 class LimitedSizeBag : public AbstractBag<T>
 {
@@ -38,7 +40,8 @@ public:
   static const std::size_t maxsize = 100;
 
 private:
-  // TODO
+  T data[maxsize]; // data array of items (limited size bag)
+  std::size_t size; // current # of items in bag
 };
 
 #include "limited_size_bag.tpp"
