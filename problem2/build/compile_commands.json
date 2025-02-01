@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/problem2/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-array-list.dir/test_array_list.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/problem2/test_array_list.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/problem2/test_array_list.cpp",
+  "output": "CMakeFiles/test-array-list.dir/test_array_list.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/problem2/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-linked-list.dir/test_linked_list.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/problem2/test_linked_list.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/problem2/test_linked_list.cpp",
+  "output": "CMakeFiles/test-linked-list.dir/test_linked_list.cpp.o"
+}
+]

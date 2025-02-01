@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-array-list.dir/test_array_list.cpp.o" -o test-array-list
