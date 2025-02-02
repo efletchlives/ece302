@@ -6,6 +6,8 @@
 // force class expansion
 template class ArrayList<int>;
 
+/* my test cases below */
+
 TEST_CASE("test default constructor", "[ArrayList]")
 {
   // integer array list
@@ -171,3 +173,4 @@ TEST_CASE("test setEntry method", "[ArrayList]")
   REQUIRE(list1.getEntry(3) == 4);
   REQUIRE(list1.getEntry(4) == 2);
 }
+

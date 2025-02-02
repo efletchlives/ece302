@@ -26,22 +26,10 @@ LinkedList<T>::LinkedList(const LinkedList<T> &x)
 {
   head_node = nullptr; // to avoid dangling pointers and memory leaks since you aren't pointing to anything
   size = 0;
-  if(x.head_node) { // if the head node of x exists
-    Node<T>* current = x.head_node;
-    Node<T>* prev = nullptr;
-
-    while(current) {
-      Node<T>* new_node = new Node<T>(current->getItem());
-      if(!head_node) { // if the head node on the linked list being copied to does not exist
-        head_node = new_node; // make the head node of the linked list being copied to the head node of linked list x
-      }
-      else {
-        prev->setNext(new_node); 
-      }
-      prev = new_node; // set previous node to new node
-      current = current->getNext();
-    }
-    size=x.size;
+  Node<T>* current = x.head_node;
+  while(current) {
+    insert(size+1,current->getItem());
+    current = current->getNext();
   }
 }
 
@@ -82,13 +70,13 @@ template <typename T>
 // inserts node at specified position in the linked list
 bool LinkedList<T>::insert(std::size_t position, const T &item)
 {
-  if(position > size) {
+  if(position < 1 || position > size + 1) {
     return false; // insert unsuccessful
   }
   // allocate memory for new node
   Node<T>* new_node = new Node<T>(item);
 
-  if(position == 0) {
+  if(position == 1) {
     // have new node point to head and make that new node the head
     new_node->setNext(head_node);
     head_node = new_node;
@@ -99,7 +87,7 @@ bool LinkedList<T>::insert(std::size_t position, const T &item)
     Node<T>* node_before = head_node;
 
     // shift over this node to the node before the specified position
-    for(int i=0;i<(position-1);i++) {
+    for(int i=1;i<(position-1);i++) {
       node_before = node_before->getNext();
     }
     // new node points at what the node before pointed at (this is allowed since multiple pointers can point at one piece of data)
@@ -117,7 +105,7 @@ template <typename T>
 // removes node at specified position in the linked list
 bool LinkedList<T>::remove(std::size_t position)
 {
-  if(position >= size) {
+  if(position < 1 || position > size) {
     return false; // removal unsuccessful
   }
 
@@ -125,7 +113,7 @@ bool LinkedList<T>::remove(std::size_t position)
   Node<T>* temp_node = nullptr;
 
   // if position is the head node
-  if(position == 0) {
+  if(position == 1) {
     temp_node = head_node; // set temporary node to the head node
     head_node = head_node->getNext(); // make the head node the next element after the temporary node
   }
@@ -134,7 +122,7 @@ bool LinkedList<T>::remove(std::size_t position)
     Node<T>* node_before = head_node;
 
     // shift this node over to the node before the specified position 
-    for(int i=0;i<position-1;i++) {
+    for(int i=1;i<(position-1);i++) {
       node_before = node_before->getNext();
     } 
     temp_node = node_before->getNext(); // set the temporary node to the pointer pointing to the position node
@@ -165,16 +153,16 @@ template <typename T>
 T LinkedList<T>::getEntry(std::size_t position) const
 {
   // if position is outside range of size
-  if(position >= size) {
-    return T();
+  if(position < 1 || position > size) {
+    throw std::out_of_range("position out of range");
   }
-  Node<T>* node_before = head_node;
+  Node<T>* current_node = head_node;
   // shift the pointer over to the node before the position
-  for(int i=0;i<position;i++) {
-    node_before = node_before->getNext();
+  for(int i=1;i<position;i++) {
+    current_node = current_node->getNext();
   }
 
-  return node_before->getItem(); // return the pointer of the node before since it is pointing at the specified position's value
+  return current_node->getItem(); // return the pointer of the node before since it is pointing at the specified position's value
   
 }
 
@@ -183,19 +171,19 @@ template <typename T>
 void LinkedList<T>::setEntry(std::size_t position, const T &newValue)
 {
   // if position is outside range of size
-  if(position >= size) {
+  if(position < 1 || position > size) {
     throw std::out_of_range("position out of range"); // entry set successful
   }
   // create a node to represent the node before
-  Node<T>* node_before = head_node;
+  Node<T>* current_node = head_node;
 
   // shift this pointer over to the node before the position of the value you want to set
-  for(int i=0;i<position;i++){
-    node_before = node_before->getNext();
+  for(int i=1;i<position;i++){
+    current_node = current_node->getNext();
   }
 
   // change value through the pointer of node before since it points to the node at the specified position
-  node_before->setItem(newValue);
+  current_node->setItem(newValue);
 
   // entry set successful
 }

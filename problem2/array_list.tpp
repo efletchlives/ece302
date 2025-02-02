@@ -16,6 +16,7 @@ template <typename T>
 // destructor
 ArrayList<T>::~ArrayList()
 {
+  clear(); // clearing the array helps with deallocation
   delete[] data; // delete data array to deallocate memory
 }
 
@@ -28,7 +29,7 @@ ArrayList<T>::ArrayList(const ArrayList &rhs)
   data = new T[max_size]; // allocates memory for the array list
 
   // copy data element by element
-  for(std::size_t i=0;i<size;++i) {
+  for(std::size_t i=0;i<size;i++) {
     data[i] = rhs.data[i];
   }
 }
@@ -69,8 +70,8 @@ template <typename T>
 bool ArrayList<T>::insert(std::size_t position, const T &item)
 {
   // first check if the position is in the array list
-  if(position > size) {
-    return false; // if not, return false
+  if(position < 1 || position > size + 1) { // position bounds adjusted to starting index at 1
+    return false; // position out of range
   }
   
   if (size == max_size) { // if array list is at max storage
@@ -87,11 +88,11 @@ bool ArrayList<T>::insert(std::size_t position, const T &item)
   } 
 
   // shift data over in case position is middle of data
-  for(std::size_t i=size;i>position;i--) {
+  for(std::size_t i=size;i>(position-1);i--) {
     data[i] = std::move(data[i-1]); 
   }
 
-  data[position] = item; // insert item in array list
+  data[position-1] = item; // insert item in array list
   size++; // increment size
   return true; // insert successful
 }
@@ -101,19 +102,18 @@ template <typename T>
 bool ArrayList<T>::remove(std::size_t position)
 {
   // if position is outside range of size or equal to size since you are removing
-  if(position >= size) {
+  if(position < 1 || position > size) { // position bounds adjusted to starting index at 1
     return false; // removal unsuccessful
   }
 
   // shift data over in case position is in the middle of data
-  for(std::size_t i=position;i<(size-1);i++) {
+  for(std::size_t i=(position-1);i<(size-1);i++) {
       data[i] = std::move(data[i+1]); 
-    }
+  }
 
   size--;
+  // maybe put functionality in to resize the array later?
   return true; // removal successful
-
-  // maybe add something that deallocates memory based on the amount of data? a later thing and only if necessary
 }
 
 template <typename T>
@@ -121,6 +121,7 @@ template <typename T>
 void ArrayList<T>::clear()
 {
   size = 0;
+  // maybe change max size and deallocate and allocate new memory
 }
 
 template <typename T>
@@ -128,17 +129,18 @@ template <typename T>
 T ArrayList<T>::getEntry(std::size_t position) const
 {
   // if the specified position is outside range of size or equal to it, return blank
-  if(position >= size) {
+  if(position < 1 || position > size) {
     throw std::out_of_range("position out of range");
   }
-  return data[position];
+  return data[position-1];
 }
 
 template <typename T>
 // set the entry at the specified position to the specified value in the array list
 void ArrayList<T>::setEntry(std::size_t position, const T &newValue)
 {
-  if(position < size) {
-    data[position] = newValue;
+  if(position < 1 || position > size) {
+    throw std::out_of_range("position out of range");
   }
+  data[position-1] = newValue;
 }
