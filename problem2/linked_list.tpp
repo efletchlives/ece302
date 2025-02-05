@@ -18,6 +18,7 @@ template <typename T>
 LinkedList<T>::~LinkedList()
 {
   clear();
+  delete head_node;
 }
 
 template <typename T>
@@ -26,10 +27,10 @@ LinkedList<T>::LinkedList(const LinkedList<T> &x)
 {
   head_node = nullptr; // to avoid dangling pointers and memory leaks since you aren't pointing to anything
   size = 0;
-  Node<T>* current = x.head_node;
-  while(current) {
-    insert(size+1,current->getItem());
-    current = current->getNext();
+  Node<T>* current = x.head_node; // set the new pointer to the head node of the linked list you are copying from
+  for(int i=1;i<=(x.getLength());i++) { // while within the size of the linked list you are copying
+    insert(size+1,current->getItem()); // insert a node after the head node
+    current = current->getNext(); // shift current to point to the next node
   }
 }
 
@@ -45,7 +46,8 @@ template <typename T>
 // swaps the private members of the current linked list with linked list x
 void LinkedList<T>::swap(LinkedList &x)
 {
-  std::swap(head_node,x.head_node);
+  // use swap method from standard library to swap the head nodes and sizes
+  std::swap(head_node,x.head_node); 
   std::swap(size,x.size);
 }
 

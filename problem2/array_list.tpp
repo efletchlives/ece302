@@ -29,7 +29,7 @@ ArrayList<T>::ArrayList(const ArrayList &rhs)
   data = new T[max_size]; // allocates memory for the array list
 
   // copy data element by element
-  for(std::size_t i=0;i<size;i++) {
+  for(std::size_t i=0;i<size;i++) { // using size_t makes it more memory efficient than if you were using int
     data[i] = rhs.data[i];
   }
 }
@@ -80,7 +80,7 @@ bool ArrayList<T>::insert(std::size_t position, const T &item)
     T* new_data = new T[max_size]; // allocate memory for the array list with more storage
 
     // copy array list to new array list
-    for(std::size_t i=0;i<size;i++) {
+    for(std::size_t i=0;i<size;i++) { // using size_t makes it more memory efficient than if you were using int
       new_data[i] = std::move(data[i]);
     }
     delete[] data; // delete old full array
@@ -88,7 +88,7 @@ bool ArrayList<T>::insert(std::size_t position, const T &item)
   } 
 
   // shift data over in case position is middle of data
-  for(std::size_t i=size;i>(position-1);i--) {
+  for(std::size_t i=size;i>(position-1);i--) { // using size_t makes it more memory efficient than if you were using int
     data[i] = std::move(data[i-1]); 
   }
 
@@ -107,7 +107,7 @@ bool ArrayList<T>::remove(std::size_t position)
   }
 
   // shift data over in case position is in the middle of data
-  for(std::size_t i=(position-1);i<(size-1);i++) {
+  for(std::size_t i=(position-1);i<(size-1);i++) { // using size_t makes it more memory efficient than if you were using int
       data[i] = std::move(data[i+1]); 
   }
 
