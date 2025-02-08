@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 #include "algebraic_expressions.hpp"
-
+// command line input
 int main(int argc, char **argv) {
   if (argc != 2) {
     std::cout << "Usage: " << argv[0] << " postfix" << std::endl;

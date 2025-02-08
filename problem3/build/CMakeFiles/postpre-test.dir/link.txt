@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/postpre-test.dir/test_postpre.cpp.o" "CMakeFiles/postpre-test.dir/algebraic_expressions.cpp.o" -o postpre-test

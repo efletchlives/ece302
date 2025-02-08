@@ -27,10 +27,10 @@ LinkedList<T>::LinkedList(const LinkedList<T> &x)
 {
   head_node = nullptr; // to avoid dangling pointers and memory leaks since you aren't pointing to anything
   size = 0;
-  Node<T>* current = x.head_node; // set the new pointer to the head node of the linked list you are copying from
+  Node<T>* copied_list = x.head_node; // set the new pointer to the head node of the linked list you are copying from
   for(int i=1;i<=(x.getLength());i++) { // while within the size of the linked list you are copying
-    insert(size+1,current->getItem()); // insert a node after the head node
-    current = current->getNext(); // shift current to point to the next node
+    insert(size+1,copied_list->getItem()); // insert a node after the head node
+    copied_list = copied_list->getNext(); // shift current to point to the next node
   }
 }
 
