@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-FindPalindrome.dir/FindPalindrome.cpp.o" "CMakeFiles/test-FindPalindrome.dir/test_FindPalindrome.cpp.o" -o test-FindPalindrome

@@ -53,40 +53,53 @@ bool isPost(std::string s)
 }
 
 
+// global variable to check for the first test to ensure it doesn't check for the postfix past the first iteration
+bool firstcall = true;
+
 // referenced the textbook problem and set up similarly to the endPost function
 // convert postfix to prefix
 void convert(const std::string &postfix, std::string &prefix)
 {
-  std::cout << "Checking isPost: " << postfix << " -> " << (isPost(postfix) ? "Valid" : "Invalid") << std::endl;
-  // check if the input postfix is invalid
-  if(!isPost(postfix))
+  // check if the input postfix is invalid, ensures that it only steps into this check on the first call
+  if(!isPost(postfix) && firstcall) {
     throw std::invalid_argument("invalid input postfix");
+    firstcall = false;
+  }
 
-  // store how many characters in postfix
-  int num_char = postfix.length();
-
-  // store the last and first characters of the postfix to get the bounds of the postfix
+  // store the last character of the postfix
   int last = postfix.length()-1;
-  int first = endPost(postfix,last);
 
   // store the operator as a character
   char ch = postfix[last];
 
+  // uses a similar structure to endPost for recursion
   if(isalpha(ch)) {
     prefix = std::string(1,ch); // stores the operator as the first character in the string
   }
   else if(isoperator(ch)) {
     std::string left,right;
-    std::string substr1 = postfix.substr(first,last-first); // stores the second value in substr1
-    std::string substr2 = postfix.substr(0,first); // stores the second 
 
+    // find the end of first postfix
+    int end = endPost(postfix,last-1);
+    // if there is only one character in the string
+    if(end == -1)
+      throw std::invalid_argument("invalid postfix");
+
+    std::string substr1 = postfix.substr(end,last-end); // stores the second value in substr1
     convert(substr1,right); // combines substr1 and right, so that the second postfix is stored in the string
+
+    std::string substr2 = postfix.substr(0,end); // stores the first value in substr2
     convert(substr2,left); // combines substr2 and left, so that the first postfix is stored in the string
 
     // store into prefix parameter
-    prefix += left + right; // brings substrings together and organizes them as a prefix from a postfix ex) "+ab"
+    prefix = ch + left + right; // brings substrings together and organizes them as a prefix from a postfix ex) "+ab"
   }
   else {
     throw std::invalid_argument("invalid character in postfix expression"); // if the character in the operator's place in not a listed operator
+  }
+
+  // if the postfix is the length of the prefix, set firstcall to true to reset the function for its next use
+  if(postfix.length() == prefix.length()) {
+    firstcall = true;
   }
 }

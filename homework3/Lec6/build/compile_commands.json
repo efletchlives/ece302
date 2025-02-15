@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework3/Lec6/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/evaluate_prefix.dir/test_prefix.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework3/Lec6/test_prefix.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework3/Lec6/test_prefix.cpp",
+  "output": "CMakeFiles/evaluate_prefix.dir/test_prefix.cpp.o"
+}
+]

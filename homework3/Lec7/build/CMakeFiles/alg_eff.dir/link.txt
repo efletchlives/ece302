@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/alg_eff.dir/test_array.cpp.o -o alg_eff

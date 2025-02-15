@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework3/Lec7/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/alg_eff.dir/test_array.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework3/Lec7/test_array.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework3/Lec7/test_array.cpp",
+  "output": "CMakeFiles/alg_eff.dir/test_array.cpp.o"
+}
+]

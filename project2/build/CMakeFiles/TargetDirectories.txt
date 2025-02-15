@@ -1,0 +1,6 @@
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/project2/build/CMakeFiles/test-FindPalindrome.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/project2/build/CMakeFiles/submission.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/project2/build/CMakeFiles/starter_download.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/project2/build/CMakeFiles/test.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/project2/build/CMakeFiles/edit_cache.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/project2/build/CMakeFiles/rebuild_cache.dir

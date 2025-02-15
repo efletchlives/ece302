@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/evaluate_prefix.dir/test_prefix.cpp.o -o evaluate_prefix
