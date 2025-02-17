@@ -30,7 +30,7 @@ static void convertToLowerCase(string & value)
 
 //------------------- PRIVATE CLASS METHODS ------------------------------------
 
-// private recursive function. Must use this signature!
+// do not touch, this works!
 void FindPalindrome::recursiveFindPalindromes(vector<string>
         candidateStringVector, vector<string> currentStringVector)
 {
@@ -115,10 +115,9 @@ bool FindPalindrome::isPalindrome(string currentString) const
 // default constructor
 FindPalindrome::FindPalindrome()
 {
-	// clear candidate + current vector to prepare for palindrome finding
+	num_factorial = 0;
 	words.clear();
 	final_palindromes.clear();
-	num_factorial=0;
 }
 
 // destructor
@@ -144,102 +143,104 @@ void FindPalindrome::clear()
 // checks that only one character at most can appear an odd number of times and that the characters on each side match respectively
 bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 {
-	// use modulus to test if even or odd
-	// if stringVector is even
-	if(stringVector.size() % 2 == 0) { // if string is even
-		for(int i=0;i<(stringVector.size()/2);i++) { // loop through the right side of the palindrome
-				// compare opposite characters (left side to right side)
-				if(stringVector[i] != stringVector[stringVector.size()-1-i]) { // if the characters don't match, it is not a palindrome
-					return false;
-				}
-		}
-		return true;
-	}
+    // combine the words in the string vector
+    string word_combination;
+    for (int i = 0; i < stringVector.size(); i++) {
+        word_combination += stringVector[i];
+    }
+    convertToLowerCase(word_combination);
 
-	// if stringVector is odd 
-	else {
-		
-		int middle_count = 0; // counter for middle character
-		int odd_count = 0; // counts how many strings appear an odd number of times
+    // count the number of times each character appears (0 - 'a' through to 25 - 'z')
+    int charCounts[26] = {0}; // Only lowercase letters are considered
 
-		for(int i=0;i<(stringVector.size()/2);i++) {
-				// compare the characters minus the middle character (left side to right side)
-				if(stringVector[i] != stringVector[stringVector.size()-1-i]) {
-					return false;
-				}
-		}
+    for (int i = 0; i < word_combination.size(); i++) {
+        if (isalpha(word_combination[i])) { // checks if character is readable
+            charCounts[word_combination[i] - 'a']++; // increments the specific character 
+        }
+    }
 
-		// store the middle character 
-		string middle_char = stringVector[stringVector.size()/2];
-
-		// count times that the middle character appears
-		for(int i=0;i<stringVector.size();i++) {
-			// testing for middle character
-			if(stringVector[i] == middle_char) {
-				middle_count++;
-			}
-		}
-
-		// check if middle character appears odd number of times
-		if(middle_count % 2 == 1){
-			return true;
-		}
-
-		// check if there is more than one character that appears odd number of times
-		int count = 0;
-		for(int i=0; i<stringVector.size();i++) {
-			for(int j=0;j<stringVector.size();j++) {
-				// direct comparison
-				if(stringVector[i] == stringVector[j]) {
-					count++;
-				}
-			}
-		}
-
-		if(count % 2 == 1) {
-			odd_count++;
-		}
-
-		// if more than one string appears an odd number of times
-		if(odd_count > 1) {
-			return false;
-		}
-
-		return true;
-	}
+    // count number of characters with odd number
+    int oddCount = 0;
+    for (int i = 0; i < 26; i++) { // loops through the characters ('a' to 'z')
+        if (charCounts[i] % 2 != 0) { // checks if the character appears 
+            oddCount++;
+        }
+    }
+    
+    if (word_combination.length() % 2 == 0) { // if the length is even, all characters must appear even times
+        return oddCount == 0;
+    } else { // if the length is odd, only one character appear an odd number of times
+        return oddCount == 1;
+    }
 }
 
-// DO THIS!!!!
+
 bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
                               const vector<string> & stringVector2)
 {
-	// TODO need to implement this...
-	return false;
+	// count the amount of times characters appear in left side
+	vector<int> charCounts1(26,0); // only lowercase letters are considered
+	for(int i=0;i<stringVector1.size();i++) {
+		for(int j=0;j<stringVector1[i].size();j++) {
+			char normal_char = stringVector1[i][j];
+
+			if(isalpha(normal_char)) {
+				char lowercase_char = tolower(normal_char);
+				charCounts1[lowercase_char - 'a']++;
+			}
+		}
+	}
+    
+	// count the amount of times characters appear in right side
+	vector<int> charCounts2(26,0); // only lowercase letters are considered
+	for(int i=0;i<stringVector2.size();i++) {
+		for(int j=0;j<stringVector2[i].size();j++) {
+			char normal_char = stringVector2[i][j];
+
+			if(isalpha(normal_char)) {
+				char lowercase_char = tolower(normal_char);
+				charCounts2[lowercase_char - 'a']++;
+			}
+		}
+	}
+
+	// loop through the character lists
+	for(int i=0;i<26;i++) {
+		if(charCounts1[i]>charCounts2[i]) { // check that characters in left side do not appear more than in right side
+			return false;
+		}
+	}
+	return true; // all characters in left substring occur in reversed order in right substring
 }
 
+
+// do not touch, this works!
 bool FindPalindrome::add(const string & value)
 {
-	// makes sure you aren't counting previous add palindrome possibilities since you are adding another string
-	final_palindromes.clear();
-	num_factorial=0;
+	// convert input string to lowercase
+	string input_string = value;
+	convertToLowerCase(input_string);
 
 	// verification that it is valid (if the value is a number or space, return false)
-	if(!valid_word(value)){ // checks if the character is within the ascii value range ('a'-'z' or 'A'-'Z')
+	if(!valid_word(input_string)){ // checks if the character is within the ascii value range ('a'-'z' or 'A'-'Z')
 		return false;
 	}
 
-	std::vector<std::vector<std::string>> value_cutTest = {{value}};
-	if(!cutTest1(value_cutTest[0])) {
-		return false;
+	// test if it is unique (for loop through the words vector to look for the same)
+	for(int i=0;i<words.size();i++) {
+		string lowercase_words = words[i];
+		convertToLowerCase(lowercase_words); // you must convert the strings to lowercase
+		if(input_string == lowercase_words) {
+			return false; // if word already exists within
+		}
 	}
-	// that's what the recursion is for
-	// // check if string is a palindrome
-	// if(!isPalindrome(value)) {
-	// 	return false;
-	// }
 
 	// otherwise add to the palindrome
-	words.push_back(value); // copy string into candidate vector
+	words.push_back(input_string); // copy string into candidate vector
+
+	// makes sure you aren't counting previous palindrome possibilities without the new string since you are adding another string
+	final_palindromes.clear();
+	num_factorial=0;
 
 	// thing i learned: i was originally trying to enter in an empty vector for current and the candidates filled with the words
 	// it should be the other way around like shown below
@@ -248,16 +249,45 @@ bool FindPalindrome::add(const string & value)
 	return true; // the input string is a palindrome
 }
 
+
+// do not touch, this works!
 bool FindPalindrome::add(const vector<string> & stringVector)
 {
-	// makes sure you aren't counting previous add palindrome possibilities since you are adding a string vector
-	final_palindromes.clear();
-	num_factorial=0;
-
 	// verification that it is valid (if the value is a number or space, return false)
 	for(int i=0; i<stringVector.size();i++){
 		if(!valid_word(stringVector[i])){ // checks if the word is a space or within the ascii value range
 			return false;
+		}
+	}
+
+	// since every string is valid, copy the stringVector into a new string vector that we can modify
+	vector<string> temp_vector = stringVector;
+
+	// change string vector to lowercase
+	for(int i=0;i<stringVector.size();i++) {
+		string lowercase_string = temp_vector[i];
+		convertToLowerCase(lowercase_string);
+		temp_vector[i] = lowercase_string; // put new lowercase string in temp_vector
+
+		// test to make sure that there aren't repeats within the stringVector
+		for(int j=0;j<stringVector.size();j++) {
+			if(i==j) { // if it is at its index, skip over
+				continue;
+			}
+			if(temp_vector[i] == temp_vector[j]) { // checks the stringVector against itself to make sure there aren't repeats
+				return false; // there is a duplicate in temp_vector
+			}
+		}		
+	}
+
+	// test if each new word added from stringVector is unique
+	for(int i=0; i<words.size();i++) {
+		for(int j=0;j<words.size();j++) {
+			string lowercase_string = words[i];
+			convertToLowerCase(lowercase_string);
+			if(temp_vector[i] == lowercase_string) {
+				return false;
+			}
 		}
 	}
 
@@ -266,11 +296,17 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 		words.push_back(stringVector[i]);
 	}
 
+	// makes sure you aren't counting previous add palindrome possibilities since you are adding a string vector
+	final_palindromes.clear();
+	num_factorial=0;
+
 	recursiveFindPalindromes({},words); // start recursion to find if palindromes exist with these new words in stringVector
 
 	return true; // the input string is a palindrome
 }
 
+
+// this does not work
 vector< vector<string> > FindPalindrome::toVector() const
 {
 	return final_palindromes;

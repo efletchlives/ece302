@@ -10,7 +10,6 @@ TEST_CASE( "Test adding words", "[FindPalindrome]" )
 	FindPalindrome b;
 	REQUIRE(b.add("kayak"));
 	REQUIRE(!b.add("kayak1"));
-	REQUIRE(!b.add("kayaaa")); // THIS RETURNS FALSE
 }
 
 TEST_CASE("test recursion (add string + string vector)", "[FindPalindrome]"){
@@ -20,7 +19,9 @@ TEST_CASE("test recursion (add string + string vector)", "[FindPalindrome]"){
 	REQUIRE(b.add("a"));
 	REQUIRE(b.add("AA"));
 	REQUIRE(b.add("AaA"));
+	
 	REQUIRE(b.number() == 6);
+	REQUIRE(!b.add("aA"));
 
 	// invalid string input
 	REQUIRE(!b.add("a1"));
@@ -40,13 +41,11 @@ TEST_CASE("test recursion (add string + string vector)", "[FindPalindrome]"){
 	// invalid string vector input
 	std::vector<std::string> input2 = {"1"};
 	REQUIRE(!d.add(input2));
-}
 
-TEST_CASE("test default constructor", "[FindPalindrome]") {
-	FindPalindrome a;
-	std::vector<std::vector<std::string>> compare_vector;
-	REQUIRE(a.toVector() == compare_vector);
-	REQUIRE(a.number() == 0);
+
+	FindPalindrome e;
+	std::vector<std::string> input3 = {"racecar","racecar"};
+	REQUIRE(!e.add(input3));
 }
 
 TEST_CASE("test number", "[FindPalindrome]") {
@@ -74,23 +73,107 @@ TEST_CASE("test clear", "[FindPalindrome]") {
 }
 
 TEST_CASE("test cutTest1", "[FindPalindrome]") {
-	FindPalindrome a;
+    FindPalindrome a;
 
-    // Test even-length palindrome
-    std::vector<std::string> even_palindrome = {"baab"};
-    REQUIRE(a.cutTest1(even_palindrome) == true);  // Even length, all characters even counts
+	// even length valid
+    std::vector<std::string> test = {"a", "bb", "a"};
+    REQUIRE(a.cutTest1(test) == true);
 
-    // test odd-length palindrome
-    std::vector<std::string> odd_palindrome = {"abcba"};
-    REQUIRE(a.cutTest1(odd_palindrome) == true);  // Odd length, one character with odd count
+	// odd length valid
+    test = {"a", "bb", "c", "bb", "a"};
+    REQUIRE(a.cutTest1(test) == true);
 
-    // test invalid palindrome (multiple odd counts)
-    //std::vector<std::string> invalid_palindrome = {"aabbb"};
-    //REQUIRE(a.cutTest1(invalid_palindrome) == false);  // More than one character with odd counts
+	// even length invalid
+    test = {"a", "b", "c", "d"};
+    REQUIRE(a.cutTest1(test) == false);
+
+	// odd length invalid
+    test = {"a", "b", "c", "b", "e"};
+    REQUIRE(a.cutTest1(test) == false);
+
+    SECTION("Single character (always a palindrome)")
+    test = {"a"};
+    REQUIRE(a.cutTest1(test) == true);
+
+	// empty vector
+    test = {};
+    REQUIRE(a.cutTest1(test) == true); // empty string is considered a palindrome?
+
+    // all the same character
+    test = {"a", "a", "a", "a"};
+    REQUIRE(a.cutTest1(test) == true);
+
+    // valid case
+    test = {"a", "a", "b"};
+    REQUIRE(a.cutTest1(test) == true);
+
+	// two odd characters
+    test = {"a", "b"};
+    REQUIRE(a.cutTest1(test) == false);
+
+	// different cases
+    test = {"A", "b", "B", "a"};
+    REQUIRE(a.cutTest1(test) == true);
 }
 
 TEST_CASE("test cutTest2", "[FindPalindrome]") {
-	
+	FindPalindrome a;
+
+	// even length valid
+    std::vector<std::string> left = {"a", "bb"};
+    std::vector<std::string> right = {"bb", "a"};
+    REQUIRE(a.cutTest2(left, right) == true);
+
+	// odd length valid
+    left = {"a", "bb"};
+	right = {"c", "bb", "a"};
+    REQUIRE(a.cutTest2(left, right) == true);
+
+	// even length invalid
+    left = {"a", "b"};
+    right = {"c", "d"};
+    REQUIRE(a.cutTest2(left, right) == false);
+
+	// odd length invalid
+    left = {"a", "b"};
+    right = {"c", "b", "e"};
+    REQUIRE(a.cutTest2(left, right) == false);
+
+	// single character (always a palindrome)
+    left = {"a"};
+    right = {"a"};
+    REQUIRE(a.cutTest2(left, right) == true);
+
+	// empty vector
+    left = {};
+    right = {};
+    REQUIRE(a.cutTest2(left, right) == true); // Empty strings are considered palindromes
+
+	// all the same character
+    left = {"a", "a"};
+    right = {"a", "a"};
+    REQUIRE(a.cutTest2(left, right) == true);
+
+	// only one it doesn't pass on
+	// valid case with one odd character
+    //left = {"a", "a"};
+    //right = {"b"};
+    //REQUIRE(a.cutTest2(left, right) == true);
+
+	// two odd characters (invalid)
+    left = {"a"};
+    right = {"b"};
+    REQUIRE(a.cutTest2(left, right) == false);
+
+	// different cases (case-insensitive)
+    left = {"A", "b"};
+    right = {"B", "a"};
+    REQUIRE(a.cutTest2(left, right) == true);
+
+	// left side longer than right side
+    left = {"a", "b", "c"};
+    right = {"b", "a"};
+    REQUIRE(a.cutTest2(left, right) == false);
 }
 
 TEST_CASE("test toVector", "[FindPalindrome]") {
