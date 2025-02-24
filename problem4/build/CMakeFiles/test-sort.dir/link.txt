@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-sort.dir/test_sort.cpp.o" -o test-sort

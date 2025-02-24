@@ -34,7 +34,7 @@ static void convertToLowerCase(string & value)
 void FindPalindrome::recursiveFindPalindromes(vector<string>
         candidateStringVector, vector<string> currentStringVector)
 {
-
+	
 	// only applies when you have used all of words to form a palindrome 
 	if(currentStringVector.empty()) {
 		string word_combination; // create a string to store the possible palindrone combinations
@@ -46,8 +46,9 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
 
 		// then test if it is a palindrome
 		if(isPalindrome(word_combination)) {
-			
 
+
+			// CHANGE THIS!!!!
 			// avoid adding duplicates loop below might be unnecessary
 			// look through the final palindrome vector to see if the combination found already exists in the final list
 			for(int i=0;i<final_palindromes.size();i++) {
@@ -64,13 +65,15 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
 
 		// recursion portion (loop through each possible combination of words)
 		for(int i=0;i<currentStringVector.size();i++) { // loop through the candidate vector
+			
 			swap(currentStringVector[0], currentStringVector[i]); // swap the first string with the string you are on
 
 			vector<string> possible_candidate = candidateStringVector;
 			possible_candidate.push_back(currentStringVector[0]); // add word to candidates
 
-			vector<string> possible_current = vector<string>(currentStringVector.begin()+1,currentStringVector.end()); // create current without the character just pushed into candidates 
-
+			vector<string> possible_current = vector<string>(currentStringVector.begin()+1,currentStringVector.end()); // create current without the character just pushed into candidates
+			 
+			count_recursion++;
 			recursiveFindPalindromes(possible_candidate,possible_current); // recursion to do the same with the next possible palindrome words
 
 			swap(currentStringVector[0], currentStringVector[i]); // swap the strings back
@@ -91,6 +94,11 @@ void FindPalindrome::recursiveFindPalindromes(vector<string>
 			//candidateStringVector.pop_back(); // remove last word
 			//swap(currentStringVector[0],currentStringVector[i]); // change it back to the original order
 		}
+}
+
+
+int FindPalindrome::countRecursion() const {
+	return count_recursion;
 }
 
 // private function to determine if a string is a palindrome (given, you
@@ -244,6 +252,7 @@ bool FindPalindrome::add(const string & value)
 
 	// thing i learned: i was originally trying to enter in an empty vector for current and the candidates filled with the words
 	// it should be the other way around like shown below
+	count_recursion=0; // set counting for recursion here
 	recursiveFindPalindromes({},words); // start recursion to find if palindromes exist with this new word
 	
 	return true; // the input string is a palindrome
@@ -300,6 +309,7 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 	final_palindromes.clear();
 	num_factorial=0;
 
+	count_recursion=0;
 	recursiveFindPalindromes({},words); // start recursion to find if palindromes exist with these new words in stringVector
 
 	return true; // the input string is a palindrome
@@ -311,4 +321,8 @@ vector< vector<string> > FindPalindrome::toVector() const
 {
 	return final_palindromes;
 }
+
+
+
+
 

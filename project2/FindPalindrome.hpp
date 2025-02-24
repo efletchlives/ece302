@@ -11,6 +11,7 @@ private:
 	int num_factorial; // stores the factorial number of palindromes
 	std::vector<std::string> words; // stores possible words to be used in palindrome
 	std::vector<std::vector<std::string>> final_palindromes; // stores the word combos that are palindromes
+	int count_recursion; // counts recursion
 	// ...
 	
 	// private stuff that you are given or is specified in the project
@@ -101,6 +102,8 @@ public:
 	    all current strings added to the FindPalindrome instance.
 	@return  A vector of vectors containing all palindromes. */
 	std::vector< std::vector<std::string> > toVector() const;
+
+	int countRecursion() const;
 
 };
 

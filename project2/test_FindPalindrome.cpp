@@ -174,6 +174,12 @@ TEST_CASE("test cutTest2", "[FindPalindrome]") {
     left = {"a", "b", "c"};
     right = {"b", "a"};
     REQUIRE(a.cutTest2(left, right) == false);
+
+
+	// test case for checkoff (delete this before)
+	left = {"a","b","a","d"};
+	right = {"a","a","a"};
+	REQUIRE(a.cutTest2(left,right)== false);
 }
 
 TEST_CASE("test toVector", "[FindPalindrome]") {
@@ -192,3 +198,14 @@ TEST_CASE("test toVector", "[FindPalindrome]") {
 	REQUIRE(a.toVector() == compare_vector2);
 }
 
+
+TEST_CASE("checkoff") {
+	FindPalindrome a;
+	std::vector<std::string> input = {"lemon"};
+	REQUIRE(!a.cutTest1(input));
+
+	FindPalindrome b;
+	std::vector<std::string> input2 = {"aba"};
+	b.add(input2);
+	REQUIRE(b.countRecursion() == 1);
+}
