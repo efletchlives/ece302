@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec12/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_smart_ptr.dir/test_smart_ptr.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec12/test_smart_ptr.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec12/test_smart_ptr.cpp",
+  "output": "CMakeFiles/test_smart_ptr.dir/test_smart_ptr.cpp.o"
+}
+]

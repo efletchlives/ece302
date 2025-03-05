@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-sorted-list.dir/test_sorted_list.cpp.o" -o test-sorted-list

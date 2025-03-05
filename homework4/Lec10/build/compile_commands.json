@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec10/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_iterator.dir/test_iterator.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec10/test_iterator.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec10/test_iterator.cpp",
+  "output": "CMakeFiles/test_iterator.dir/test_iterator.cpp.o"
+}
+]

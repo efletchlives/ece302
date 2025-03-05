@@ -9,7 +9,7 @@ void quick_sort(List<T>& list, int first, int last)
 {
 	// if first and last index are invalid, throw exception
 	if(first < 0 || last < 0) {
-		throw std::invalid_argument("invalid range since first index > last index");
+		throw std::invalid_argument("invalid range since first/last is/are invalid positions");
 	}
 	if (first < last) { // if the first position is less than the last position
 

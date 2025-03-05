@@ -127,9 +127,9 @@ template <typename T>
 // gets the value at the specified position in the array list
 T List<T>::getEntry(std::size_t position) const
 {
-  // if the specified position is outside range of size or equal to it, return blank
+  // if the specified position is outside range of size or equal to it, throw exception
   if(position < 1 || position > size) {
-    throw std::out_of_range("position out of range");
+    throw std::out_of_range("position out of range (getEntry)");
   }
   return data[position-1];
 }
@@ -139,7 +139,7 @@ template <typename T>
 void List<T>::setEntry(std::size_t position, const T& newValue)
 {
   if(position < 1 || position > size) {
-    throw std::out_of_range("position out of range");
+    throw std::out_of_range("position out of range (setEntry)");
   }
   data[position-1] = newValue;
 }
@@ -149,7 +149,7 @@ template <typename T>
 void List<T>::moveEntry(std::size_t from, std::size_t to)
 {
   if(from < 1 || from > size || to < 1 || to > size) {
-    throw std::out_of_range("position out of range");
+    throw std::out_of_range("position out of range (moveEntry)");
   }
   if(from == to) { // if the 1st position is equal to the 2nd
     return;

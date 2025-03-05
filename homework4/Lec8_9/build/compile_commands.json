@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec8_9/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_sort.dir/test_sort.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec8_9/test_sort.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework4/Lec8_9/test_sort.cpp",
+  "output": "CMakeFiles/test_sort.dir/test_sort.cpp.o"
+}
+]
