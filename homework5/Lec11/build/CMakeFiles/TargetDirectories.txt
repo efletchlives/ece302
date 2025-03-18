@@ -1,0 +1,6 @@
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build/CMakeFiles/test_array_stack.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build/CMakeFiles/test_linked_stack.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build/CMakeFiles/direct_download.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build/CMakeFiles/test.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build/CMakeFiles/edit_cache.dir
+/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build/CMakeFiles/rebuild_cache.dir

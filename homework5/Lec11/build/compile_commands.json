@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_array_stack.dir/test_array_stack.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/test_array_stack.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/test_array_stack.cpp",
+  "output": "CMakeFiles/test_array_stack.dir/test_array_stack.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_linked_stack.dir/test_linked_stack.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/test_linked_stack.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework5/Lec11/test_linked_stack.cpp",
+  "output": "CMakeFiles/test_linked_stack.dir/test_linked_stack.cpp.o"
+}
+]

@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/test_array_stack.dir/test_array_stack.cpp.o -o test_array_stack
