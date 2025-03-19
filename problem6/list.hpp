@@ -33,9 +33,9 @@ public:
   void setEntry(std::size_t position, const T& newValue);
 
 private:
-
-  //TODO
-  
+  T* data; // array data
+  size_t size; // number of elements in the array
+  size_t max_size; // maximum size of the array  
 };
 
 #include "list.tpp"
