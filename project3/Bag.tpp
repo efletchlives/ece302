@@ -81,23 +81,52 @@ bool Bag<ItemType>::contains(const ItemType &anEntry) const
 	return (getPointerTo(anEntry) != nullptr);
 } // end contains
 
+
+// seems to work
 template <typename ItemType>
 int Bag<ItemType>::getFrequencyOf(const ItemType &anEntry) const
 {
-	int frequency = 0;
-	int counter = 0;
-	Node<ItemType> *curPtr = headPtr;
-	while ((curPtr != nullptr) && (counter < itemCount))
-	{
-		if (anEntry == curPtr->getItem())
-		{
+	double frequency = 0;
+
+	// store in vector and not bag because i don't want to lose my mind
+	std::vector<ItemType> freq_vector;
+
+	// copy bag to vector
+	Node<ItemType>* current = headPtr;
+	while(current != nullptr) {
+		freq_vector.push_back(current->getItem());
+		current = current->getNext();
+	}
+
+	/* only thing that doesn't work and is failing the tests */
+	int length = freq_vector.size();
+	for(int i = 0; i < length; i++) {
+		std::string current_str = freq_vector[i];
+		char last_char = current_str.back();
+		int str_length = current_str.length();
+		current_str.erase(str_length-1,1);
+
+		// if start or end tag and equal to the specified item
+		if(last_char == '1' && current_str == anEntry) {
+			frequency += 0.5;
+		}
+		// if declaration, empty tag, or content and equal to the specified item
+		if(last_char == '2' && current_str == anEntry) {
 			frequency++;
-		} // end if
+		}
+	}
 
-		counter++;
-		curPtr = curPtr->getNext();
-	} // end while
-
+	// for(const ItemType& item : freq_vector) {
+	// 	char last_char = item.back();
+	// 	char case1 = item.pop_back();
+	// 	char case2 = item.pop_back();
+	// 	if(last_char == '1' && case1 == anEntry) {
+	// 		frequency += 0.5;
+	// 	}
+	// 	if(last_char == '2' && case2 == anEntry) {
+	// 		frequency++;
+	// 	}
+	// }
 	return frequency;
 } // end getFrequencyOf
 

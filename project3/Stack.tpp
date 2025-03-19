@@ -54,6 +54,7 @@ template <typename ItemType>
 // peek method: peeks at the item at the top of the stack
 ItemType Stack<ItemType>::peek() const
 {
+	// if item not found
 	if(isEmpty()) {
 		throw std::out_of_range("the stack is empty so nothing to peek at");
 	}

@@ -115,6 +115,13 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 					// remove the question marks at beginning and end from the string
 					token_str.erase(token_str.length()-1);
 					token_str.erase(0,1);
+
+					/* maybe keep idk yet, come back to fix me evan */
+					// std::string tagname = find_tagname(token_str);
+					// if(valid_token2(tagname) == false)  {
+					// 	return false;
+					// }
+					// token_str = tagname;
 					i++;
 				}
 
@@ -149,8 +156,6 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 
 		}
 
-
-
 		// increment if only a space
 		else if(current_char == ' ') {
 			i++;
@@ -167,9 +172,11 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 	}
 
 	// exception: a content token cannot exist alone
-	if(!tokenizedInputVector.empty() && tokenizedInputVector[0].tokenType == CONTENT) {
+	if(tokenizedInputVector.size() == 1 && tokenizedInputVector[0].tokenType == CONTENT) {
 		return false;
 	}
+
+	token_flag = true;
 	return true; // string successfully tokenized
 } // end
 
@@ -186,47 +193,108 @@ bool XMLParser::parseTokenizedInput()
 	}
 
 	/* part 1: check that the input starts with a declaration or start tag */ 
+
+	////////////////////// special exceptions below \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
+	// exception: not able to be parsed if starts with something other than declaration or start tag
 	else if(tokenizedInputVector[0].tokenType != DECLARATION && tokenizedInputVector[0].tokenType != START_TAG) {
 		return false;
 	}
 
+	// exception: declaration is only item
+	else if(tokenizedInputVector[0].tokenType == DECLARATION && length == 1) {
+		return false;
+	}
+
+	// exception: declaration, followed by content, followed by tags
+	else if(tokenizedInputVector[0].tokenType == DECLARATION && tokenizedInputVector[1].tokenType == CONTENT && tokenizedInputVector[2].tokenType == START_TAG) {
+		return false;
+	}
+
+	// exception: declaration and empty tag only in that order is possible
+	else if(tokenizedInputVector[0].tokenType == DECLARATION && tokenizedInputVector[1].tokenType == EMPTY_TAG && length == 2) {
+		elementNameBag.add(tokenizedInputVector[0].tokenString);
+		elementNameBag.add(tokenizedInputVector[1].tokenString);
+		parse_flag = true;
+		return true;
+	}
+	//\\\\\\\\\\\\\\\\\\\\\\ special exceptions end ///////////////////////////////////
+
 	/* part 2: loop through the vector to check order */
+
+	// keep track of start and end tags
+	int num = 0;
+
 	for(int i = 0; i < length; i++) {
-		// check for start tag
-		if(tokenizedInputVector[0].tokenType == START_TAG) {
-			
+
+		// check for start tag: push string to stack and add to bag
+		if(tokenizedInputVector[i].tokenType == START_TAG) {
+			// if previous start tags haven't been matched and the stack is empty, parsing is not possible
+			if(num > 0 && parseStack.isEmpty() == true) {
+				return false;
+			}
+			// push start tag name to stack
+			parseStack.push(tokenizedInputVector[i].tokenString);
+			// add tag name to bag 
+			elementNameBag.add(tokenizedInputVector[i].tokenString);
+			num++;
+
 		}
-		// check for end tag
-		else if(tokenizedInputVector[0].tokenType == END_TAG) {
+		// check for end tag: pop string and check
+		else if(tokenizedInputVector[i].tokenType == END_TAG) {
+			// compare with end tag and start tag
+			if(tokenizedInputVector[i].tokenString != parseStack.peek()) {
+				return false;
+			}
+			// if the start and end tag are equal, pop from the stack
+			else {
+				parseStack.pop();
+			}
 
 		}
 		// check for declaration
-		else if(tokenizedInputVector[0].tokenType == )
+		else if(tokenizedInputVector[i].tokenType == DECLARATION) {
+			// if the declaration is somewhere other than the 1st position
+			if(!parseStack.isEmpty()) {
+				return false;
+			}
+		}
+
+		else if(tokenizedInputVector[i].tokenType == EMPTY_TAG) {
+			if(tokenizedInputVector[i-1].tokenType == EMPTY_TAG && tokenizedInputVector[length-1].tokenType == EMPTY_TAG) {
+				return false;
+			}
+			/*   ///////// below was added \\\\\\\\\\   */
+			else if(tokenizedInputVector[length-1].tokenType == EMPTY_TAG) {
+				return false;
+			}
+		}
 	}
 
-	if(parseStack.isEmpty()) {
-		return true;
+	// if some tags don't have an end tag
+	if(!parseStack.isEmpty()) {
+		return false;
 	}
-	return false;
+
+	// to include declarations, empty tags, and content
+	// elementNameBag.clear();
+	// for(int i = 0;i < length; i++) {
+	// 	elementNameBag.add(tokenizedInputVector[i].tokenString);
+	// }
+	parse_flag = true;
+	return true;
 }
 
-// TODO, iterate through tokenizedInputVector to check validity
-	// and update stack and bag accordingly, and refer to the following code structure:
-
-	// for (int i = 0; i < tokenizedInputVector.size(); i++)
-	// {
-	//   if (?? == START_TAG) {?? continue;}
-	// 	 else if (?? == END_TAG) {?? continue;}
-	// 	 else if (?? == EMPTY_TAG) {?? continue;}
-	// 	 ...
-	// }
-
-// clear method: clears all of the containers in the class
+// clear method: clears all of the containers + flags in the class
 void XMLParser::clear()
 {
+	// clear all containers
 	elementNameBag.clear();
 	parseStack.clear();
 	tokenizedInputVector.clear();
+
+	// reset flag for checking if passed
+	token_flag = false;
+	parse_flag = false;
 }
 
 // returnTokenizedInput method: returns tokenizedInputVector
@@ -239,26 +307,40 @@ std::vector<TokenStruct> XMLParser::returnTokenizedInput() const
 bool XMLParser::containsElementName(const std::string &element) const
 {
 	// if token and parser pass and contains the element (stack passes all items to bag)
-	if(tokenizedInputVector.empty() || parseStack.size() != 0) {
+	if(!token_flag || !parse_flag) {
 		throw std::logic_error("string cannot be tokenized and/or parsed");
 	}
-	// if token and/or parser fail, and/or bag does not contain the element
-	if(elementNameBag.isEmpty()) {
-		throw std::logic_error("string cannot be tokenized and/or parsed");
-	}
+	/* maybe needed later */
+	// // if token and/or parser fail, and/or bag does not contain the element
+	// if(elementNameBag.isEmpty()) {
+	// 	return false;
+	// }
 	return elementNameBag.contains(element);
 }
 
 // frequencyElementName method: returns number of times that the specified element exists in the Bag
 int XMLParser::frequencyElementName(const std::string &element) const
 {
+	/* exceptions begin */
 	// if token and parser pass and contains element (stack passes all items to bag)
-	if(tokenizedInputVector.empty() || parseStack.size() != 0) {
+	if(!token_flag || !parse_flag) {
 		throw std::logic_error("string cannot be tokenized and/or parsed");
 	}
 	// if bag does not contain the element
-	if(elementNameBag.getFrequencyOf(element) == 0) {
-		throw std::logic_error("string cannot be parsed");
+	if(elementNameBag.contains(element) == false) {
+		return 0;
 	}
-	return (elementNameBag.getFrequencyOf(element));
+	/* exceptions end */
+
+	/* implemented functions to identify between the different tags/tokens */
+	// add identifiers to the tags
+	change_bag();
+
+	int freq = elementNameBag.getFrequencyOf(element);
+
+	// change the tags back to their original form
+	change_back();
+
+	return freq;
+	
 }

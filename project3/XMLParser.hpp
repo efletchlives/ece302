@@ -30,13 +30,18 @@ class XMLParser
 {
 private:
 	/** Bag to store the XML element names. Uses your Bag implementation. */
-	Bag<std::string> elementNameBag;
+	// has to declared mutable so that i can alter it within the const function getFrequencyof 
+	mutable Bag<std::string> elementNameBag;
 	/** Stack to store XML tag names while parsing. Uses your Stack implementation. */
 	Stack<std::string> parseStack;
 	/** Vector to store the tokenized input string and the token types */
 	std::vector<TokenStruct> tokenizedInputVector;
 
 	/** private members add below */
+
+	// flag
+	bool token_flag = false;
+	bool parse_flag = false;
 
 public:
 	/** The class constructor.
@@ -204,6 +209,42 @@ public:
 			}
 		}
 		return true; // token is valid
+	}
+
+	// this function is used to identify between the different tags since the getfrequencyof function doesn't know and can mess up empty tags
+	void change_bag() const {
+		// clear the bag
+		elementNameBag.clear();
+		int length = tokenizedInputVector.size();
+
+		// loop through and add '1' or '2' according to the token type
+		for(int i = 0; i < length; i++) {
+			// start and end tag (identifier = '1')
+			if(tokenizedInputVector[i].tokenType == START_TAG || tokenizedInputVector[i].tokenType == END_TAG) {
+				elementNameBag.add(tokenizedInputVector[i].tokenString + '1');
+			} 
+			// declarations and empty tags
+			else if(tokenizedInputVector[i].tokenType == DECLARATION || tokenizedInputVector[i].tokenType == EMPTY_TAG) {
+				elementNameBag.add(tokenizedInputVector[i].tokenString + '2');
+			}
+
+			// content (not included in getFrequencyat count)
+			else {
+				elementNameBag.add(tokenizedInputVector[i].tokenString + '3');
+			}
+		}
+	}
+
+	// revert back from the different tags
+	void change_back() const {
+		// clear the bag
+		elementNameBag.clear();
+		int length = tokenizedInputVector.size();
+
+		// loop through to add the original data to the bag
+		for(int i = 0;i < length; i++) {
+			elementNameBag.add(tokenizedInputVector[i].tokenString);
+		}
 	}
 
 }; // end XMLParser
