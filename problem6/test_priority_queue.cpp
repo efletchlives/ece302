@@ -143,46 +143,47 @@ TEST_CASE("string priority queue", "[priority queue]")
 
 /* FINISH THIS!!! */
 // date class that you mentioned
-class gavin {
-public:
-  // classes gavin has taught
-  string c1 = "ece201", c2 = "ece301", c3 = "ece302"; // as far as i know
-  gavin(string a, string b, string c) : c1(a), c2(b), c3(c){}
+// template <typename T>
+// class gavin {
+// public:
+//   // grades in classes gavin has taught
+//   T c1 = "ece201", c2 = "ece301", c3 = "ece302"; // as far as i know
+//   gavin(T a, T b, T c) : c1(a), c2(b), c3(c){}
 
-  // comparison operators
-  bool operator>(const Date& other) const {
-    if (year != other.year) return year > other.year;
-    if (month != other.month) return month > other.month;
-    return day > other.day;
-  }
-  bool operator<(const Date& other) const {
-    if (year != other.year) return year < other.year;
-    if (month != other.month) return month < other.month;
-    return day < other.day;
-  }
-  bool operator==(const Date& other) const {
-    return year == other.year && month == other.month && day == other.day;
-  }
-};
+//   // comparison operators
+//   bool operator>(const gavin& other) const {
+//     if (c1 != other.c1) return c1 < other.c1;
+//     if (c2 != other.c2) return c2 < other.c2;
+//     return c3 < other.c3;
+//   }
+//   bool operator<(const gavin& other) const {
+//     if (c1 != other.c1) return c1 > other.c1;
+//     if (c2 != other.c2) return c2 > other.c2;
+//     return c3 > other.c3;
+//   }
+//   bool operator==(const gavin& other) const {
+//     return c1 == other.c1 && c2 == other.c2 && c3 == other.c3;
+//   }
+// };
 
-TEST_CASE("priority with gavin class", "[priority queue]")
-{
-  PriorityQueue<gavin, SortedList<gavin, List<gavin>>> pq;
+// TEST_CASE("priority with gavin class", "[priority queue]")
+// {
+//   PriorityQueue<gavin<std::string>, SortedList<gavin<std::string>, List<gavin<std::string>>>> pq;
 
-  REQUIRE(pq.isEmpty());
+//   REQUIRE(pq.isEmpty());
 
-  pq.add(Date(2025, 3, 19));
-  REQUIRE_FALSE(pq.isEmpty());
+//   pq.add(gavin<string>("A","B","C"));
+//   REQUIRE_FALSE(pq.isEmpty());
 
-  pq.add(Date(2023, 1, 1));
-  pq.add(Date(2024, 12, 31));
-  pq.add(Date(2022, 5, 15));
+//   pq.add(gavin<string>("B","C","A"));
+//   pq.add(gavin<string>("A","B","B"));
+//   pq.add(gavin<string>("A","A","B"));
 
-  REQUIRE(pq.peek() == Date(2025, 3, 19));
+//   REQUIRE(pq.peek() == gavin<string>("A","A","B"));
 
-  pq.remove();
-  REQUIRE(pq.peek() == Date(2024, 12, 31));
+//   pq.remove();
+//   REQUIRE(pq.peek() == gavin<string>("A","B","B"));
 
-  pq.remove();
-  REQUIRE(pq.peek() == Date(2023, 1, 1));
-}
+//   pq.remove();
+//   REQUIRE(pq.peek() == gavin<string>("A","B","C"));
+// }

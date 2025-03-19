@@ -267,6 +267,7 @@ bool XMLParser::parseTokenizedInput()
 			else if(tokenizedInputVector[length-1].tokenType == EMPTY_TAG) {
 				return false;
 			}
+			elementNameBag.add(tokenizedInputVector[i].tokenString);
 		}
 	}
 

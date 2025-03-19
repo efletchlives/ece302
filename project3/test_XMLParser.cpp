@@ -404,8 +404,8 @@ TEST_CASE("new autograder test cases","[XMLParser]") {
 	// Test #23: passed
 
 	// Test #24:       // FAILS
-	// myXMLParser.clear();
-	// myXMLParser.tokenizeInputString(R"(<?xml version="1.1"?><tag><empty/><empty/><empty/><empty/>content3<empty/><empty/><file><empty/><empty/></file>content5<empty/><empty/></tag>)");
-	// myXMLParser.parseTokenizedInput();
-	// REQUIRE(myXMLParser.containsElementName("empty"));
+	myXMLParser.clear();
+	myXMLParser.tokenizeInputString(R"(<?xml version="1.1"?><tag><empty/><empty/><empty/><empty/>content3<empty/><empty/><file><empty/><empty/></file>content5<empty/><empty/></tag>)");
+	myXMLParser.parseTokenizedInput();
+	REQUIRE(myXMLParser.containsElementName("empty"));
 }
