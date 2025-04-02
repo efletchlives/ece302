@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework7/Lec17/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test_binary.dir/test_binary_tree.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/homework7/Lec17/test_binary_tree.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework7/Lec17/test_binary_tree.cpp",
+  "output": "CMakeFiles/test_binary.dir/test_binary_tree.cpp.o"
+}
+]

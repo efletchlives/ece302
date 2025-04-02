@@ -223,7 +223,7 @@ public:
 			if(tokenizedInputVector[i].tokenType == START_TAG || tokenizedInputVector[i].tokenType == END_TAG) {
 				elementNameBag.add(tokenizedInputVector[i].tokenString + '1');
 			} 
-			// declarations and empty tags
+			// declarations and empty tags (identifier = '2')
 			else if(tokenizedInputVector[i].tokenType == DECLARATION || tokenizedInputVector[i].tokenType == EMPTY_TAG) {
 				elementNameBag.add(tokenizedInputVector[i].tokenString + '2');
 			}
@@ -247,6 +247,31 @@ public:
 		}
 	}
 
+// checkoff function
+	std::vector<int> count_tags() {
+		int i=0;
+		int length = tokenizedInputVector.size();
+		std::vector<int> count(5);
+
+		while(i < length) {
+			if(tokenizedInputVector[i].tokenType==START_TAG) {
+				count[0]++; // stores start tag count
+			}
+			else if(tokenizedInputVector[i].tokenType==END_TAG) {
+				count[1]++; // stores end tag count
+			}
+			else if(tokenizedInputVector[i].tokenType==DECLARATION) {
+				count[2]++;
+			}
+			else if(tokenizedInputVector[i].tokenType==CONTENT) {
+				count[3]++;
+			}
+			else {
+				count[4]++; // stores empty tag count
+			}
+		}
+		return count;
+	}
 }; // end XMLParser
 
 #endif

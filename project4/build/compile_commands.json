@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-pathfinder.dir/PathFinder.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/PathFinder.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/PathFinder.cpp",
+  "output": "CMakeFiles/test-pathfinder.dir/PathFinder.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-pathfinder.dir/test_pathfinder.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/test_pathfinder.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/test_pathfinder.cpp",
+  "output": "CMakeFiles/test-pathfinder.dir/test_pathfinder.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-pathfinder.dir/lib/image.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/lib/image.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/lib/image.cpp",
+  "output": "CMakeFiles/test-pathfinder.dir/lib/image.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-pathfinder.dir/lib/lodepng.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/lib/lodepng.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/lib/lodepng.cpp",
+  "output": "CMakeFiles/test-pathfinder.dir/lib/lodepng.cpp.o"
+},
+{
+  "directory": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/build",
+  "command": "/usr/bin/g++   -g -std=gnu++11 -o CMakeFiles/test-pathfinder.dir/lib/gif.cpp.o -c /home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/lib/gif.cpp",
+  "file": "/home/efletchlives/VsCode/ECE302/ECE302_EHF/project4/lib/gif.cpp",
+  "output": "CMakeFiles/test-pathfinder.dir/lib/gif.cpp.o"
+}
+]

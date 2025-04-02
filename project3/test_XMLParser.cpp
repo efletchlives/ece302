@@ -403,9 +403,25 @@ TEST_CASE("new autograder test cases","[XMLParser]") {
 
 	// Test #23: passed
 
-	// Test #24:       // FAILS
+	// Test #24:      
 	myXMLParser.clear();
 	myXMLParser.tokenizeInputString(R"(<?xml version="1.1"?><tag><empty/><empty/><empty/><empty/>content3<empty/><empty/><file><empty/><empty/></file>content5<empty/><empty/></tag>)");
 	myXMLParser.parseTokenizedInput();
 	REQUIRE(myXMLParser.containsElementName("empty"));
 }
+
+// 2 declarations, 3 empty tags, 1 content, whatever else
+
+TEST_CASE("false and true case") {
+	XMLParser myXMLparser;
+	// false case
+	REQUIRE(myXMLparser.tokenizeInputString(R"(<?xml?>content<?xml?><empty/><empty/><empty/>)"));
+	REQUIRE_FALSE(myXMLparser.parseTokenizedInput());
+
+	// true case
+	REQUIRE(myXMLparser.tokenizeInputString(R"(<?xml?><?xml?><start><empty/><empty/><empty/>content</start>)"));
+	REQUIRE(myXMLparser.parseTokenizedInput());
+}
+
+
+// count tags

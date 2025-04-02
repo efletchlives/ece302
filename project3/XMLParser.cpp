@@ -187,6 +187,12 @@ bool XMLParser::parseTokenizedInput()
 {
 	int length = tokenizedInputVector.size();
 
+	// exception: not the same number of start and end tags
+	std::vector<int> validation = count_tags();
+	if(validation[0] != validation[1]) {
+		return false;
+	}
+
 	// exception: input vector has no items in it
 	if(length == 0) {
 		return false;
