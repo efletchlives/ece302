@@ -3,7 +3,7 @@
 template <typename T, typename L>
 void Queue<T, L>::enqueue(const T &item)
 {
-  // insert item at specified position
+  // insert item at 1st position
   internal_list.insert(1,item);
 }
 

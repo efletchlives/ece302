@@ -11,9 +11,10 @@ PathFinder::PathFinder(const Image<Pixel> &img)
 void PathFinder::load(const Image<Pixel> &img)
 {
     // use try catch to check if image is valid
-    try {
-        checkImage(img);
-    } catch (const std::invalid_argument) {}
+    //try {
+    checkImage(img);
+    //} catch (const std::invalid_argument) {}
+    image = img;
 
     int row = img.width();
     int col = img.height();
@@ -40,7 +41,7 @@ void PathFinder::checkImage(const Image<Pixel> &img)
     int count_red = 0; // counts red pixels
 
     for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; i++) {
+        for (int j = 0; j < col; j++) {
             if (img(i,j) == RED) {
                 count_red++;
             }
@@ -51,34 +52,73 @@ void PathFinder::checkImage(const Image<Pixel> &img)
         }
     }
     // if there are no red images or more than one red image
-    if(count_red = 0 || count_red > 1) {
+    if(count_red == 0 || count_red > 1) {
         throw std::invalid_argument("no red pixels or more than one red pixel in image");
     }
 }
 
 void PathFinder::findPath(std::string strategy)
 {
-// initial
-//    s = problem.initial() // initial state
-//    if problem.goal(s) return s // reached goal state
-   
-//    frontier = a FIFO queue with s as the initial element (unexplored states)
-    Queue<Coord,AbstractList> unexplored;
-//    explored = a container to store explored states
-   
-//    while true
-//       if frontier is empty return failure // no more states to explore
-//       s = pop next state from frontier // get a next state
-//       if problem.goal(s) return s // reached goal state
-//       add s to explored // store this state as explored
-//       for each state s_next in problem.actions(s) do // for each next state
-//          if s_next not in explored (or frontier) then 
-//             insert s_next into the frontier // store this state to explore
+
+    Queue<Coord,List<Coord>> unexplored; // queue that stores what you are going to explore
+    int explored[image.width()][image.height()] = {0}; // container to store the explored states (set coordinate to '1' when explored)
+    unexplored.enqueue(start_pt);
+    explored[start_pt.row][start_pt.col] = 1;
+    Coord curr_coords = start_pt; // set to starting position
 
 
-    // TODO, strategy is default at "NSWE"
-    // Must use Queue ADT to implement BFS algorithm
+    while(!unexplored.isEmpty()) {
+            curr_coords = unexplored.peekFront(); // to store current coordinates
+            unexplored.dequeue(); // remove current coord from unexplored
+
+            if (curr_coords.row == 0 || curr_coords.col == 0 || curr_coords.row == image.width() - 1 || curr_coords.col == image.height() - 1) {
+                end_pt = curr_coords; // set the end point to the current coord
+                image(curr_coords.row,curr_coords.col) = GREEN; // set the goal coord to green
+                return; // exit out of the function because you did what you wanted to
+            }
+
+        for (int i = 0; i < 4; i++) {
+            std::string::iterator strategy_iter = strategy.begin() + i; // to iterate through the strategy string
+            Coord coords = curr_coords;
+
+            // switch case to handle the different strategies as input
+            switch (*strategy_iter) {
+                case 'N': // north
+                    coords.row--; // goes to coord north of current coord
+                    break;
+                case 'S': // south
+                    coords.row++; // goes to coord south of current coord
+                    break;
+                case 'W': // west
+                    coords.col--; // goes to coord west of current coord
+                    break;
+                case 'E': // east
+                    coords.col++; // goes to coord east of current coord
+                    break;
+            }
+
+            // check if it hasn't been explored and that it is a white pix
+            if (explored[coords.row][coords.col] == 0 && image(coords.row, coords.col) == WHITE) {
+                explored[coords.row][coords.col] = 1;
+                unexplored.enqueue(coords); // add this new position to the queue
+            }
+
+            // dequeue the coord you are currently branching from + add coord to explored (put a '1' in the 2d array where the coord is on the image)
+            int row = curr_coords.row;
+            int col = curr_coords.col;
+            explored[coords.row][col] = 1; // set current coord to 1 in 2d array
+
+            // go back up to top of for loop
+        } // end of strategy implementation
+    }
+
+    throw std::runtime_error("path not found"); // if path cannot be found
 }
+
+
+
+
+    
 
 
 void PathFinder::findPathWithVisualization(const std::string &outfile, int frame_duration, int frame_gap, std::string strategy)
@@ -196,6 +236,7 @@ void PathFinder::clear()
 {
     // image clear to do here!!!! RAH!!!
     start_pt = {0,0};
+    next_state = {0,0};
     end_pt = {0,0};
 }
 

@@ -8,6 +8,7 @@
 #include <chrono>
 
 /* Provided test cases */
+// passed
 TEST_CASE("PathFinder: Test Queue ADT enqueue, deque, peekFront", "[queue]")
 {
     Queue<int, List<int>> queue;
@@ -31,7 +32,9 @@ TEST_CASE("PathFinder: Test Queue ADT enqueue, deque, peekFront", "[queue]")
     REQUIRE_THROWS_AS(queue.peekFront(), std::out_of_range);
     REQUIRE_THROWS_AS(queue.dequeue(), std::out_of_range);
 }
+
 // Need to at least pass this test case for draft deadline
+// passed
 TEST_CASE("PathFinder: Testing constructor on invalid images", "[pathfinder]")
 {
     // Create an simple image with invalid pixel colors
@@ -69,6 +72,7 @@ TEST_CASE("PathFinder: Testing constructor on invalid images", "[pathfinder]")
     REQUIRE_THROWS_AS(PathFinder PathFinder(img4), std::invalid_argument);
 }
 
+// passed
 TEST_CASE("PathFinder: Test getStart()", "[pathfinder]")
 {
     // Create a simple image with one red pixel
@@ -121,6 +125,8 @@ TEST_CASE("PathFinder: Test Pathfinding Result and Time", "[pathfinder]")
     my_solver.clear();
     my_solver.load(img1);
     // maze01 is unfindble
+
+    // it fails below, probably not handling runtime error correctly
     REQUIRE_THROWS_AS(my_solver.findPath(), std::runtime_error);
     my_solver.clear();
 
