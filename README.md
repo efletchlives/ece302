@@ -1,2 +1,2 @@
-# ECE302_EHF
+# ece302
 My Master Repository for 0302
