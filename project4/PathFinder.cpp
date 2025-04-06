@@ -235,9 +235,9 @@ Coord PathFinder::getEnd()
 void PathFinder::clear()
 {
     // image clear to do here!!!! RAH!!!
-    start_pt = {0,0};
-    next_state = {0,0};
-    end_pt = {0,0};
+    start_pt = {-1,-1};
+    next_state = {-1,-1};
+    end_pt = {-1,-1};
 }
 
 // Nonmember functions
