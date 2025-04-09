@@ -16,8 +16,8 @@ void PathFinder::load(const Image<Pixel> &img)
     //} catch (const std::invalid_argument) {}
     image = img;
 
-    int row = img.width();
-    int col = img.height();
+    int row = img.height();
+    int col = img.width();
 
     // find start point
     for(int i = 0; i < row; i++) {
@@ -36,19 +36,24 @@ PathFinder::~PathFinder()
 
 void PathFinder::checkImage(const Image<Pixel> &img)
 {
-    int col = img.height(); // stores the number of pixels in a column
-    int row = img.width(); // stores the number of pixels in a row
+    int row = img.height(); // stores the number of pixels in a row
+    int col = img.width(); // stores the number of pixels in a column
     int count_red = 0; // counts red pixels
 
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            if (img(i,j) == RED) {
+            Pixel pix = img(i,j);
+
+            if (pix == RED) {
                 count_red++;
             }
             // if pixels are any color other than white, black, or red
-            else if (img(i,j) != BLACK && img(i,j) != WHITE && img(i,j) != RED) {
+            else if (pix != BLACK && pix != WHITE && pix != RED) {
                 throw std::invalid_argument("invalid pixel color in image");
             }
+
+            // checking for out of bounds part: test #5 debugging
+            // std::cout << i << ", " << j << std::endl;
         }
     }
     // if there are no red images or more than one red image
@@ -61,7 +66,11 @@ void PathFinder::findPath(std::string strategy)
 {
 
     Queue<Coord,List<Coord>> unexplored; // queue that stores what you are going to explore
-    int explored[image.width()][image.height()] = {0}; // container to store the explored states (set coordinate to '1' when explored)
+    std::vector<std::vector<int>> explored(image.height(), std::vector<int>(image.width(), 0)); // container to store the explored states (set coordinate to '1' when explored)
+
+    // for coloring the path
+    std::vector<std::vector<Coord>> parents(image.height(), std::vector<Coord>(image.width(), {-1,-1})); // container to store parents (set them to invalid to catch when you go out of bounds)
+    
     unexplored.enqueue(start_pt);
     explored[start_pt.row][start_pt.col] = 1;
     Coord curr_coords = start_pt; // set to starting position
@@ -71,9 +80,30 @@ void PathFinder::findPath(std::string strategy)
             curr_coords = unexplored.peekFront(); // to store current coordinates
             unexplored.dequeue(); // remove current coord from unexplored
 
-            if (curr_coords.row == 0 || curr_coords.col == 0 || curr_coords.row == image.width() - 1 || curr_coords.col == image.height() - 1) {
+            if (curr_coords.row == 0 || curr_coords.col == 0 || curr_coords.row == image.height() - 1 || curr_coords.col == image.width() - 1) {
                 end_pt = curr_coords; // set the end point to the current coord
                 image(curr_coords.row,curr_coords.col) = GREEN; // set the goal coord to green
+
+                // to color the path yellow
+                Coord path_color = end_pt;
+                
+                // until it reaches the start
+                while(path_color != start_pt) {
+
+                    Coord parent = parents[path_color.row][path_color.col];
+
+                    // if the parent coordinate is invalid
+                    if(parent == Coord{-1,-1}) {
+                        throw std::runtime_error("parents link back to start point is incomplete");
+                    }
+                    // this is added to make sure you don't color over the red pixel
+                    if(parent != start_pt) {
+                        image(parent.row,parent.col) = YELLOW; // color pixel in path yellow
+                    }
+
+                    path_color = parent;
+                }
+
                 return; // exit out of the function because you did what you wanted to
             }
 
@@ -97,28 +127,25 @@ void PathFinder::findPath(std::string strategy)
                     break;
             }
 
+
+            // making sure its in bounds
+            if(coords.row < 0 && coords.row >= image.height() && coords.col < 0 && coords.col >= image.width()) {
+                continue;
+            }
+            
             // check if it hasn't been explored and that it is a white pix
             if (explored[coords.row][coords.col] == 0 && image(coords.row, coords.col) == WHITE) {
                 explored[coords.row][coords.col] = 1;
+                parents[coords.row][coords.col] = curr_coords; // add current coordinates as a parent since it has a child
                 unexplored.enqueue(coords); // add this new position to the queue
             }
-
-            // dequeue the coord you are currently branching from + add coord to explored (put a '1' in the 2d array where the coord is on the image)
-            int row = curr_coords.row;
-            int col = curr_coords.col;
-            explored[coords.row][col] = 1; // set current coord to 1 in 2d array
-
+            
             // go back up to top of for loop
         } // end of strategy implementation
     }
 
     throw std::runtime_error("path not found"); // if path cannot be found
 }
-
-
-
-
-    
 
 
 void PathFinder::findPathWithVisualization(const std::string &outfile, int frame_duration, int frame_gap, std::string strategy)
@@ -234,7 +261,8 @@ Coord PathFinder::getEnd()
 // clear the image, idk how to do this yet
 void PathFinder::clear()
 {
-    // image clear to do here!!!! RAH!!!
+    image = Image<Pixel>();
+
     start_pt = {-1,-1};
     next_state = {-1,-1};
     end_pt = {-1,-1};

@@ -94,6 +94,7 @@ TEST_CASE("PathFinder: Test getStart()", "[pathfinder]")
     REQUIRE(pathFinder.getStart() == Coord(1, 1));
 }
 
+// passed
 TEST_CASE("PathFinder: Test Pathfinding Result and Time", "[pathfinder]")
 {
     Image<Pixel> img0 = readFromFile("../tests/maze00.png");
@@ -145,6 +146,20 @@ TEST_CASE("PathFinder: Test Pathfinding Result and Time", "[pathfinder]")
     my_solver.clear();
 }
 
+TEST_CASE("maze03 NSWE") {
+
+    Image<Pixel> img3 = readFromFile("../tests/maze03.png");
+    PathFinder my_solver(img3);
+
+    my_solver.findPath();
+
+    my_solver.writeSolutionToFile("../tests/myoutput03_NSWE.png");
+    // Check if the output image is correct
+    REQUIRE(compareImagesExit("../tests/output03_NSWE.png", "../tests/myoutput03_NSWE.png"));
+    my_solver.clear();
+}
+
+// not passed
 // Usage of findPathWithVisualization, not included in grader
 TEST_CASE("PathFinder: Demo Pathfinding Gif Creation", "[pathfinder]")
 {
@@ -174,3 +189,59 @@ TEST_CASE("PathFinder: Demo Pathfinding Gif Creation", "[pathfinder]")
 }
 
 /* Write your own uint tests here*/
+
+TEST_CASE("test #5") {
+    // maze01 should have unfindable exit
+    // passed correctly
+    Image<Pixel> img1 = readFromFile("../tests/maze01.png");
+    PathFinder my_solver(img1);
+    REQUIRE_THROWS_AS(my_solver.findPath(), std::runtime_error);
+
+    // maze02 should match maze exit
+    // passed correctly
+    my_solver.clear();
+    Image<Pixel> img2 = readFromFile("../tests/maze02.png");
+    my_solver.load(img2);
+    my_solver.findPath();
+
+     // maze03 should match maze exit
+     my_solver.clear();
+     Image<Pixel> img3 = readFromFile("../tests/maze03.png");
+     my_solver.load(img3);
+     my_solver.findPath();
+}
+
+TEST_CASE ("my test mazes") {
+
+    // image 1: there is a path
+    Image<Pixel> myimg1(4,4);
+    // assigning pixels and size for image
+    
+    // initialize a solver for the mazes
+    PathFinder pathsolver(myimg1);
+    pathsolver.findPath();
+    pathsolver.clear();
+
+    // passed
+    // image 2: no possible solution
+    Image<Pixel> myimg2(3,3);
+    // assigning pixels and size for image
+    myimg2(0,0) = BLACK;
+    myimg2(0,1) = BLACK;
+    myimg2(0,2) = BLACK;
+    myimg2(1,0) = BLACK;
+    myimg2(2,0) = BLACK;
+    myimg2(2,1) = BLACK;
+    myimg2(1,2) = BLACK;
+    myimg2(2,2) = BLACK;
+    myimg2(1,1) = RED;
+
+    pathsolver.load(myimg2);
+    // since all of the edges of the image are black, it cannot find the end of the maze
+    REQUIRE_THROWS_AS(pathsolver.findPath(), std::runtime_error);
+
+
+    // image 3: there is a path
+    Image<Pixel> myimg3(20,20);
+
+}
