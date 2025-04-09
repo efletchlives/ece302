@@ -214,9 +214,33 @@ TEST_CASE("test #5") {
 TEST_CASE ("my test mazes") {
 
     // image 1: there is a path
-    Image<Pixel> myimg1(4,4);
+    Image<Pixel> myimg1(10,10);
     // assigning pixels and size for image
-    
+    // initialize all pixels to black
+    for (int i = 0; i < 10; ++i)
+    for (int j = 0; j < 10; ++j)
+        myimg1(i, j) = BLACK;
+
+    myimg1(5,5) = RED; // start point
+    myimg1(4,5) = WHITE;
+    myimg1(3,5) = WHITE;
+    myimg1(2,5) = WHITE;
+    myimg1(1,5) = WHITE;
+    myimg1(0,5) = WHITE;
+    myimg1(5,6) = WHITE;
+    myimg1(5,7) = WHITE;
+    myimg1(5,8) = WHITE;
+    myimg1(5,9) = WHITE;
+    myimg1(6,5) = WHITE;
+    myimg1(7,5) = WHITE;
+    myimg1(8,5) = WHITE;
+    myimg1(9,5) = WHITE;
+    myimg1(5,4) = WHITE;
+    myimg1(5,3) = WHITE;
+    myimg1(5,2) = WHITE;
+    myimg1(5,1) = WHITE;
+    myimg1(5,0) = WHITE;
+
     // initialize a solver for the mazes
     PathFinder pathsolver(myimg1);
     pathsolver.findPath();
@@ -240,8 +264,41 @@ TEST_CASE ("my test mazes") {
     // since all of the edges of the image are black, it cannot find the end of the maze
     REQUIRE_THROWS_AS(pathsolver.findPath(), std::runtime_error);
 
+    pathsolver.clear();
 
     // image 3: there is a path
     Image<Pixel> myimg3(20,20);
 
+    // assigning pixels and size for image
+    for (int i = 0; i < 20; ++i) {
+        for (int j = 0; j < 20; ++j) {
+            myimg3(i, j) = BLACK; // initialize pixels with black
+        }
+    }
+
+    myimg3(10,10) = RED; // start point
+    myimg3(9,10) = WHITE;
+    myimg3(8,10) = WHITE;
+    myimg3(7,10) = WHITE;
+    myimg3(6,10) = WHITE;
+    myimg3(6,11) = WHITE;
+    myimg3(6,12) = WHITE;
+    myimg3(5,12) = WHITE;
+    myimg3(4,12) = WHITE;
+    myimg3(4,13) = WHITE;
+    myimg3(4,14) = WHITE;
+    myimg3(3,14) = WHITE;
+    myimg3(2,14) = WHITE;
+    myimg3(2,15) = WHITE;
+    myimg3(1,15) = WHITE;
+    myimg3(1,16) = WHITE;
+    myimg3(1,17) = WHITE;
+    myimg3(1,18) = WHITE;
+    myimg3(0,18) = WHITE;
+    myimg3(0,19) = WHITE;  // goal point
+
+    pathsolver.load(myimg3);
+    pathsolver.findPath();
+
+    pathsolver.clear();
 }

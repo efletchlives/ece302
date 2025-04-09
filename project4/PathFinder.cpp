@@ -136,6 +136,10 @@ void PathFinder::findPath(std::string strategy)
             // check if it hasn't been explored and that it is a white pix
             if (explored[coords.row][coords.col] == 0 && image(coords.row, coords.col) == WHITE) {
                 explored[coords.row][coords.col] = 1;
+
+                // for debugging
+                // std::cout << coords.row << ", " << coords.col << std::endl;
+
                 parents[coords.row][coords.col] = curr_coords; // add current coordinates as a parent since it has a child
                 unexplored.enqueue(coords); // add this new position to the queue
             }
