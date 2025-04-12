@@ -155,13 +155,13 @@ void PathFinder::findPath(std::string strategy)
 void PathFinder::findPathWithVisualization(const std::string &outfile, int frame_duration, int frame_gap, std::string strategy)
 {
     // frame_duration and frame_gap should stay the same throughout the function
+    // initialize counter for checking against frame_gap
+    int gap_check = 0; // same as frame duration
 
     // Initialize GIF writer
     int cell_size = 1; // Each cell is 1x1 pixels, you can change this to a larger size if needed
     int gif_height = image.height() * cell_size;
     int gif_width = image.width() * cell_size;
-
-    int frame_counter = 0; // each movement is a frame and you can define how frequently you want to write the frame
 
     GifWriter gif; // a gif object has been declared and is pending for writing
     if (!GifBegin(&gif, (outfile + ".gif").c_str(), gif_width, gif_height, frame_duration, 8, true))
@@ -169,6 +169,109 @@ void PathFinder::findPathWithVisualization(const std::string &outfile, int frame
         throw std::runtime_error("Failed to create GIF file.");
     }
 
+
+    Queue<Coord,List<Coord>> unexplored; // queue that stores what you are going to explore
+    std::vector<std::vector<int>> explored(image.height(), std::vector<int>(image.width(), 0)); // container to store the explored states (set coordinate to '1' when explored)
+
+    // for coloring the path
+    std::vector<std::vector<Coord>> parents(image.height(), std::vector<Coord>(image.width(), {-1,-1})); // container to store parents (set them to invalid to catch when you go out of bounds)
+    
+    unexplored.enqueue(start_pt);
+    explored[start_pt.row][start_pt.col] = 1;
+    Coord curr_coords = start_pt; // set to starting position
+
+
+    while(!unexplored.isEmpty()) {
+            curr_coords = unexplored.peekFront(); // to store current coordinates
+            unexplored.dequeue(); // remove current coord from unexplored
+
+            if (curr_coords.row == 0 || curr_coords.col == 0 || curr_coords.row == image.height() - 1 || curr_coords.col == image.width() - 1) {
+                end_pt = curr_coords; // set the end point to the current coord
+
+                //image(curr_coords.row,curr_coords.col) = GREEN; // set the goal coord to green
+
+                // to color the path yellow
+                Coord path_color = end_pt;
+                
+                // until it reaches the start
+                while(path_color != start_pt) {
+
+                    Coord parent = parents[path_color.row][path_color.col];
+
+                    // if the parent coordinate is invalid
+                    if(parent == Coord{-1,-1}) {
+                        throw std::runtime_error("parents link back to start point is incomplete");
+                    }
+                    // this is added to make sure you don't color over the red pixel
+                    if(parent != start_pt) {
+                        image(parent.row,parent.col) = YELLOW; // color pixel in path yellow
+                    }
+
+                    path_color = parent;
+                }
+                addFrameToGif(gif,frame_duration); // add frame for yellow
+                
+                GifEnd(&gif); // return gif 
+                return; // exit out of the function because you did what you wanted to
+            }
+
+        for (int i = 0; i < 4; i++) {
+            std::string::iterator strategy_iter = strategy.begin() + i; // to iterate through the strategy string
+            Coord coords = curr_coords;
+
+            // switch case to handle the different strategies as input
+            switch (*strategy_iter) {
+                case 'N': // north
+                    coords.row--; // goes to coord north of current coord
+                    break;
+                case 'S': // south
+                    coords.row++; // goes to coord south of current coord
+                    break;
+                case 'W': // west
+                    coords.col--; // goes to coord west of current coord
+                    break;
+                case 'E': // east
+                    coords.col++; // goes to coord east of current coord
+                    break;
+            }
+
+            // set goal point color to green
+            if (curr_coords.row == 0 || curr_coords.col == 0 || curr_coords.row == image.height() - 1 || curr_coords.col == image.width() - 1) {
+                image(coords.row, coords.col) = GREEN;
+                addFrameToGif(gif,frame_duration);
+                gap_check = 0;
+                break; // breaks out of for loop
+            }
+
+            // check if it hasn't been explored and that it is a white pix
+            else if (explored[coords.row][coords.col] == 0 && image(coords.row, coords.col) == WHITE) {
+                explored[coords.row][coords.col] = 1;
+
+                // set the found pix to blue 
+                image(coords.row, coords.col) = BLUE;
+
+                // for debugging
+                // std::cout << coords.row << ", " << coords.col << std::endl;
+
+                parents[coords.row][coords.col] = curr_coords; // add current coordinates as a parent since it has a child
+                unexplored.enqueue(coords); // add this new position to the queue
+
+                gap_check++; // increment the gap
+
+                // check for if the amount of steps passed is equal to the frame gap specified
+                if(gap_check == frame_gap) {
+                    addFrameToGif(gif,frame_duration);
+                    gap_check = 0; // reset the frame duration
+                }
+            }
+            
+            // go back up to top of for loop
+        } // end of strategy implementation
+    }
+
+    throw std::runtime_error("path not found"); // if path cannot be found
+    
+    
     // TODO, strategy is default at "NSWE"
     // Must use Queue ADT to implement BFS algorithm with visualization
 
@@ -178,7 +281,7 @@ void PathFinder::findPathWithVisualization(const std::string &outfile, int frame
 
     // It's also expected to have
     // ``writeToFile(image, outfile + "_final_visual.png")`` at the end of pathfinding
-    GifEnd(&gif);
+    
 }
 
 // Helper function
