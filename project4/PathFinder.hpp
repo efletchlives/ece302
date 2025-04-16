@@ -100,11 +100,14 @@ public:
    * @post  The pathfinder object is cleared, all dynamic memory is deallocated */
   void clear();
 
+  int get_distance();
+
 private:
   Image<Pixel> image;
   Coord start_pt; // start point (position of red pixel)
   Coord next_state; // stores the states of the points
   Coord end_pt; // end point (position of pixel changed to green)
+  int distance; 
   // TODO: Add more private member variables and methods as needed
 };
 

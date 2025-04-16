@@ -31,12 +31,21 @@ void ArrayMaxHeap<ItemType>::heapRebuild(const int subTreeNodeIndex)
 {
    if (!isLeaf(subTreeNodeIndex))
    {
-      // TODO
+      // get left and right child
+      int left_child = getLeftChildIndex(subTreeNodeIndex);
+      int right_child = getRightChildIndex(subTreeNodeIndex);
+      int larger_child = left_child;
 
-      // Find larger child
-      // Swap with larger child if node value is smaller
-      // Continue with the recursion at that child
+      // checks if right child exists and if right child is larger child
+      if (right_child < itemCount && items[right_child] > items[left_child]) {
+         larger_child = right_child;
+      }
 
+      // check if the parent node value is less than the larger child node value
+      if (items[subTreeNodeIndex] < items[larger_child]) {
+         std::swap(items[subTreeNodeIndex], items[larger_child]); // swap parent with larger child if node value is smaller
+         heapRebuild(larger_child); // Continue with the recursion at that child
+      }
    } // end if
 } // end heapRebuild, private method
 
@@ -105,41 +114,89 @@ void ArrayMaxHeap<ItemType>::clear() noexcept
 template <typename ItemType>
 ItemType ArrayMaxHeap<ItemType>::peekTop() const
 {
-   // TODO
-   return ItemType(); // Placeholder
+   return items[0]; // peeks at the root of the heap
 } // end peekTop
 
 template <typename ItemType>
 bool ArrayMaxHeap<ItemType>::add(const ItemType &newData)
 {
-   // TODO
+   // make sure that all items not used are initialized to 0
+   // for(int i=itemCount; i<DEFAULT_CAPACITY; i++) {
+   //    items[i] = nullptr;
+   // }
 
-   // Place newData in the last position
-   // Swap it with its parent until the heap property is restored
-   // Make sure to update itemCount
+   // exception: heap is at max capacity
+   if (itemCount >= DEFAULT_CAPACITY) {
+      return false; // add unsuccessful
+   }
 
-   return false; // Placeholder
+   // exception: duplicate item
+   for(int i=0; i<itemCount; i++) {
+      if(items[i] == newData) {
+         return false;
+      }
+   }
+
+   int child = itemCount;
+   items[itemCount] = newData; // add item at the end of the heap
+   itemCount++; // add item to item count
+
+   int parent = getParentIndex(child);
+   // loop until we reach the root and if the child value is greater than the parent value
+   while (child > 0 && items[child] > items[parent]) {
+         std::swap(items[child], items[parent]); // swap the items
+         child = parent; // move up a level
+         parent = getParentIndex(child);
+   }
+
+   return true; // add successful
 } // end add
 
 template <typename ItemType>
 bool ArrayMaxHeap<ItemType>::remove()
 {
-   // TODO
+   // exception: heap is empty
+   if (isEmpty()) {
+      return false;
+   }
 
-   // remove the last item
-   // swap it with the root
-   // rebuild the heap
-   // make sure to update itemCount
+   std::swap(items[0], items[itemCount - 1]); // remove the last item and swap it with the root
+   itemCount--; // remove item from item count
+   heapRebuild(0); // rebuild heap from the root
 
-   return false; // Placeholder
+   return true; // Placeholder
 } // end remove
 
 template <typename ItemType>
 void ArrayMaxHeap<ItemType>::heapSort(ItemType anArray[], int n)
 {
-   // TODO
+   // exception: if input size is greater than max size
+   if (n > DEFAULT_CAPACITY) {
+      throw std::invalid_argument("input is greater than max capacity");
+   }
 
-   // Build initial heap
+   // check for duplicates
+   for(int i = 0; i < n-1; i++) {
+      for(int j = 0; j < n; j++) {
+         if (j == i) {
+            continue;
+         }
+         else if(anArray[i] == anArray[j]) {
+            throw std::invalid_argument("there are duplicate values in the input array");
+         }
+      }
+   }
+   
+   // build initial heap
+   ArrayMaxHeap<ItemType> initial_heap(anArray, n); 
+
+   // loop through the heap in descending order
+   for (int i = 0; i < n; i++) {
+      anArray[i] = initial_heap.items[0]; // put the highest value item at the end of the array
+      initial_heap.items[0] = initial_heap.items[initial_heap.itemCount - 1]; // move last item in heap to root
+      initial_heap.itemCount--; // decrement item count since you removed item
+      initial_heap.heapRebuild(0); // rebuild heap since you removed item
+   }
    // Remove root, swap, and rebuild the heap
 
 } // end heapSort

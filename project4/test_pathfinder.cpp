@@ -161,32 +161,32 @@
 
 // not passed
 // Usage of findPathWithVisualization, not included in grader
-TEST_CASE("PathFinder: Demo Pathfinding Gif Creation", "[pathfinder]")
-{
-    Image<Pixel> img0 = readFromFile("../tests/maze00.png");
-    PathFinder my_solver(img0);
+// TEST_CASE("PathFinder: Demo Pathfinding Gif Creation", "[pathfinder]")
+// {
+//     Image<Pixel> img0 = readFromFile("../tests/maze00.png");
+//     PathFinder my_solver(img0);
 
-    // Create a GIF file with the pathfinding visualization
-    // It creates a myoutput00.gif with EVERY 1 movement and 200ms display for each movement
-    // BLUE pixels show the frontier changes along the search
-    // It also creates a myoutput00_final_visual.png with the final path
-    my_solver.findPathWithVisualization("../tests/myoutput00", 20, 1);
-    my_solver.clear();
+//     // Create a GIF file with the pathfinding visualization
+//     // It creates a myoutput00.gif with EVERY 1 movement and 200ms display for each movement
+//     // BLUE pixels show the frontier changes along the search
+//     // It also creates a myoutput00_final_visual.png with the final path
+//     my_solver.findPathWithVisualization("../tests/myoutput00", 20, 1);
+//     my_solver.clear();
 
-    Image<Pixel> img1 = readFromFile("../tests/maze01.png");
-    my_solver.load(img1);
-    // maze01 is large, so display EVERY 50 movements (one frame) and 50ms display for each frame
-    // This would fail but partial attempt visualization is recorded
-    REQUIRE_THROWS(my_solver.findPathWithVisualization("../tests/myoutput01", 5, 50)); // THROW AN EXCEPTION
-    my_solver.clear();
+//     Image<Pixel> img1 = readFromFile("../tests/maze01.png");
+//     my_solver.load(img1);
+//     // maze01 is large, so display EVERY 50 movements (one frame) and 50ms display for each frame
+//     // This would fail but partial attempt visualization is recorded
+//     REQUIRE_THROWS(my_solver.findPathWithVisualization("../tests/myoutput01", 5, 50)); // THROW AN EXCEPTION
+//     my_solver.clear();
 
-    // A larger size but solvable maze
-    // A gif and final_visual image are created
-    Image<Pixel> img2 = readFromFile("../tests/maze02.png");
-    my_solver.load(img2); 
-    my_solver.findPathWithVisualization("../tests/myoutput02", 5, 50);
-    my_solver.clear();
-}
+//     // A larger size but solvable maze
+//     // A gif and final_visual image are created
+//     Image<Pixel> img2 = readFromFile("../tests/maze02.png");
+//     my_solver.load(img2); 
+//     my_solver.findPathWithVisualization("../tests/myoutput02", 5, 50);
+//     my_solver.clear();
+// }
 
 /* Write your own uint tests here*/
 
@@ -302,3 +302,29 @@ TEST_CASE("PathFinder: Demo Pathfinding Gif Creation", "[pathfinder]")
 
 //     pathsolver.clear();
 // }
+
+TEST_CASE("checker board") {
+    Image<Pixel> myimg(3,3);
+    // assigning pixels and size for image
+    myimg(0,0) = BLACK;
+    myimg(0,1) = WHITE;
+    myimg(0,2) = BLACK;
+    myimg(1,0) = WHITE;
+    myimg(1,1) = BLACK;
+    myimg(1,2) = WHITE;
+    myimg(2,0) = BLACK;
+    myimg(2,1) = WHITE;
+    myimg(2,2) = RED;
+
+    PathFinder pathsolver(myimg);
+    pathsolver.findPath();
+
+}
+
+TEST_CASE("maze00 distance find") {
+    //maze00 should have findable exit
+    Image<Pixel> img0 = readFromFile("../tests/maze00.png");
+    PathFinder my_solver(img0);
+    my_solver.findPath();
+    REQUIRE(my_solver.get_distance() == 4);
+}

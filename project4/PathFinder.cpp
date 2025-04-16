@@ -86,7 +86,7 @@ void PathFinder::findPath(std::string strategy)
 
                 // to color the path yellow
                 Coord path_color = end_pt;
-                
+                distance = 1;
                 // until it reaches the start
                 while(path_color != start_pt) {
 
@@ -99,6 +99,7 @@ void PathFinder::findPath(std::string strategy)
                     // this is added to make sure you don't color over the red pixel
                     if(parent != start_pt) {
                         image(parent.row,parent.col) = YELLOW; // color pixel in path yellow
+                        distance++;
                     }
 
                     path_color = parent;
@@ -375,6 +376,10 @@ void PathFinder::clear()
     end_pt = {-1,-1};
 }
 
+int PathFinder::get_distance() {
+    return distance;
+}
+
 // Nonmember functions
 bool compareImagesExit(std::string img1_str, std::string img2_str)
 {
@@ -417,4 +422,5 @@ bool compareImages(std::string img1_str, std::string img2_str)
         }
     }
     return true;
+
 } // Finished
