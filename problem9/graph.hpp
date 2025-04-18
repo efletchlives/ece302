@@ -3,16 +3,18 @@
 
 #include "abstract_graph.hpp"
 
+// had to add these libraries
+#include <map>
+#include <set>
+
 template <typename ItemType>
 class Graph : public AbstractGraph<ItemType>
 {
 private:
-    // Add your private members here
-    // Using an adjacency list or adjacency matrix, not linked-based vertices
-
-    // For adjacency matrix, you may use a 2D array, or a vector of vectors etc and an array of vertices to map the indices to vertices
-    // For adjacency list, you may use a std::map to map vertices to the set of adjacent vertices
-    // Refer to std::vector, std::set, std::map, std::unordered_map etc
+    // using an adjacency list
+    std::map<ItemType, std::set<ItemType>> adjacency_list;
+    
+    // for adjacency list, you may use a std::map to map vertices to the set of adjacent vertices
 public:
     Graph();
 

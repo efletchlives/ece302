@@ -366,7 +366,7 @@ Coord PathFinder::getEnd()
     return end_pt; // end_pt is the green pixel (goal pixel)
 }
 
-// clear the image, idk how to do this yet
+// clear the image
 void PathFinder::clear()
 {
     image = Image<Pixel>();

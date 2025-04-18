@@ -10,3 +10,5 @@ TEST_CASE("Test Construction", "[construction]")
   REQUIRE(g.getNumVertices() == 0);
   REQUIRE(g.getNumEdges() == 0);
 }
+
+/* add more tests for other stuff below */
