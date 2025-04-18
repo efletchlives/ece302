@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "more_trees",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "direct_download::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-direct_download-Debug-7465ef37ba02616b2219.json",
+					"name" : "direct_download",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_more_trees::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_more_trees-Debug-7e1ed27f7b594e24823c.json",
+					"name" : "test_more_trees",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework8/Lec22_23/build",
+		"source" : "/home/efletchlives/VsCode/ECE302/ECE302_EHF/homework8/Lec22_23"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}

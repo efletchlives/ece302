@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-dict.dir/test_dict.cpp.o" -o test-dict

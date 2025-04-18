@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-graph.dir/test_graph.cpp.o" -o test-graph

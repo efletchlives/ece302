@@ -1,0 +1,1 @@
+/usr/bin/g++ -g "CMakeFiles/test-heap.dir/test_heap.cpp.o" -o test-heap
