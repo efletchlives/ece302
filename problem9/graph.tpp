@@ -42,7 +42,7 @@ bool Graph<ItemType>::add(ItemType start, ItemType end)
     }
 
     // exception: if connection is not possible
-    if (poss_connect = false) {
+    if (poss_connect == false) {
       return false;
     }
   }
